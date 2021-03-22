@@ -44,8 +44,8 @@ export interface PlaygroundWrapperProps {
   subscriptionEndpoint?: string
   setTitle?: boolean
   settings?: ISettings
-  shareEnabled?: string
-  fixedEndpoint?: string
+  shareEnabled?: boolean
+  fixedEndpoint?: boolean
   folderName?: string
   configString?: string
   showNewWorkspace?: boolean
@@ -200,7 +200,9 @@ class PlaygroundWrapper extends React.Component<
     return endpoint.replace(/^http/, 'ws')
   }
 
-  componentWillReceiveProps(nextProps: PlaygroundWrapperProps & ReduxProps) {
+  UNSAFE_componentWillReceiveProps(
+    nextProps: PlaygroundWrapperProps & ReduxProps,
+  ) {
     // Reactive props (props that cause a state change upon being changed)
     if (
       nextProps.endpoint !== this.props.endpoint ||
@@ -257,7 +259,7 @@ class PlaygroundWrapper extends React.Component<
     return url
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const platformToken = getParameterByName('platform-token')
     if (platformToken && platformToken.length > 0) {
       localStorage.setItem('platform-token', platformToken)
@@ -362,21 +364,20 @@ class PlaygroundWrapper extends React.Component<
           }}
         >
           <App>
-            {this.props.config &&
-              this.state.activeEnv && (
-                <ProjectsSideNav
-                  config={this.props.config}
-                  folderName={this.props.folderName || 'GraphQL App'}
-                  theme={theme}
-                  activeEnv={this.state.activeEnv}
-                  onSelectEnv={this.handleSelectEnv}
-                  onNewWorkspace={this.props.onNewWorkspace}
-                  showNewWorkspace={Boolean(this.props.showNewWorkspace)}
-                  isElectron={Boolean(this.props.isElectron)}
-                  activeProjectName={this.state.activeProjectName}
-                  configPath={this.props.configPath}
-                />
-              )}
+            {this.props.config && this.state.activeEnv && (
+              <ProjectsSideNav
+                config={this.props.config}
+                folderName={this.props.folderName || 'GraphQL App'}
+                theme={theme}
+                activeEnv={this.state.activeEnv}
+                onSelectEnv={this.handleSelectEnv}
+                onNewWorkspace={this.props.onNewWorkspace}
+                showNewWorkspace={Boolean(this.props.showNewWorkspace)}
+                isElectron={Boolean(this.props.isElectron)}
+                activeProjectName={this.state.activeProjectName}
+                configPath={this.props.configPath}
+              />
+            )}
             <Playground
               endpoint={this.state.endpoint}
               shareEnabled={this.props.shareEnabled}
@@ -386,7 +387,6 @@ class PlaygroundWrapper extends React.Component<
               onChangeSubscriptionsEndpoint={
                 this.handleChangeSubscriptionsEndpoint
               }
-              adminAuthToken={this.state.platformToken}
               getRef={this.getPlaygroundRef}
               config={this.props.config!}
               configString={this.state.configString!}
@@ -416,7 +416,7 @@ class PlaygroundWrapper extends React.Component<
     this.forceUpdate()
   }
 
-  getPlaygroundRef = ref => {
+  getPlaygroundRef = (ref) => {
     this.playground = ref
     if (typeof this.props.getRef === 'function') {
       this.props.getRef(ref)
@@ -453,11 +453,11 @@ class PlaygroundWrapper extends React.Component<
     })
   }
 
-  private handleChangeEndpoint = endpoint => {
+  private handleChangeEndpoint = (endpoint) => {
     this.setState({ endpoint })
   }
 
-  private handleChangeSubscriptionsEndpoint = subscriptionEndpoint => {
+  private handleChangeSubscriptionsEndpoint = (subscriptionEndpoint) => {
     this.setState({ subscriptionEndpoint })
   }
 
@@ -478,7 +478,7 @@ class PlaygroundWrapper extends React.Component<
 
   private async updateSubscriptionsUrl() {
     const candidates = this.getSubscriptionsUrlCandidated(this.state.endpoint)
-    const validCandidate = await find(candidates, candidate =>
+    const validCandidate = await find(candidates, (candidate) =>
       this.wsEndpointValid(candidate),
     )
     if (validCandidate) {
@@ -505,18 +505,18 @@ class PlaygroundWrapper extends React.Component<
   }
 
   private wsEndpointValid(url): Promise<boolean> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const socket = new WebSocket(url, 'graphql-ws')
-      socket.addEventListener('open', event => {
+      socket.addEventListener('open', (event) => {
         socket.send(JSON.stringify({ type: 'connection_init' }))
       })
-      socket.addEventListener('message', event => {
+      socket.addEventListener('message', (event) => {
         const data = JSON.parse(event.data)
         if (data.type === 'connection_ack') {
           resolve(true)
         }
       })
-      socket.addEventListener('error', event => {
+      socket.addEventListener('error', (event) => {
         resolve(false)
       })
       setTimeout(() => {
@@ -536,10 +536,7 @@ const mapStateToProps = (state, ownProps) => {
   return { theme, settings }
 }
 
-export default connect(
-  mapStateToProps,
-  { injectTabs },
-)(PlaygroundWrapper)
+export default connect(mapStateToProps, { injectTabs })(PlaygroundWrapper)
 
 async function find(
   iterable: any[],

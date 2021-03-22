@@ -32,19 +32,19 @@ export interface TabProps {
 }
 
 const Tab = styled<TabProps, 'div'>('div')`
-  z-index: ${p => (p.active ? 10 : 2)};
+  z-index: ${(p) => (p.active ? 10 : 2)};
   padding: 8px 8px 8px 8px;
   border-radius: 2px 2px 0px 0px;
-  color: ${p =>
+  color: ${(p) =>
     p.theme.mode === 'dark'
       ? p.theme.colours.white
       : p.theme.colours[p.active ? 'white' : 'darkBlue']};
-  background: ${p =>
+  background: ${(p) =>
     p.active && p.activeColor
       ? p.theme.colours[p.activeColor]
       : p.theme.mode === 'dark'
-        ? '#3D5866'
-        : '#DBDEE0'};
+      ? '#3D5866'
+      : '#DBDEE0'};
   box-shadow: -1px 1px 6px 0 rgba(0, 0, 0, 0.3);
   text-transform: uppercase;
   text-align: center;
@@ -56,5 +56,5 @@ const Tab = styled<TabProps, 'div'>('div')`
   transform: rotate(-90deg);
   transform-origin: bottom left;
   margin-top: 65px;
-  width: ${p => p.tabWidth || '100%'};
+  width: ${(p) => p.tabWidth || '100%'};
 `

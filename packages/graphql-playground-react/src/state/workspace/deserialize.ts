@@ -17,7 +17,7 @@ export function deserializePersistedState(state) {
   }) as any
 }
 
-function deserializeWorkspaces(workspaces) {
+function deserializeWorkspaces(workspaces): Map<string, any> {
   return Map(
     mapValues(workspaces, (workspace, workspaceId) => {
       return new Workspace({
@@ -32,13 +32,15 @@ function deserializeWorkspaces(workspaces) {
 
 function deserializeAppHistory(state) {
   return new AppHistory({
-    items: OrderedMap(mapValues(state.items, item => new AppHistoryItem(item))),
+    items: OrderedMap(
+      mapValues(state.items, (item) => new AppHistoryItem(item)),
+    ),
   })
 }
 
-function deserializeDocs(state) {
+function deserializeDocs(state): Map<string, any> {
   return Map(
-    mapValues(state, docsSession => {
+    mapValues(state, (docsSession) => {
       return new DocsSession({
         docsOpen: docsSession.docsOpen,
         keyMove: docsSession.keyMove,
@@ -51,17 +53,19 @@ function deserializeDocs(state) {
 
 function deserializeNavstack(navStack) {
   // note that stacks are plain objects. could be refactored to Map later
-  return List(navStack.map(s => Map(s))) as any
+  return List(navStack.map((s) => Map(s))) as any
 }
 
 function deserializeSessionsState(state) {
-  const sessions = deserializeSessions(state.sessions)
+  const sessions: any = deserializeSessions(state.sessions)
   const selectedSessionId =
     state.selectedSessionId && state.selectedSessionId !== ''
       ? state.selectedSessionId
-      : sessions.first()!.id
+      : // @ts-ignore
+        sessions.first()!.id
   return new SessionState({
     selectedSessionId,
+    // @ts-ignore
     sessions,
     sessionCount: sessions.size,
     headers: state.headers,
@@ -69,7 +73,7 @@ function deserializeSessionsState(state) {
 }
 
 function deserializeSessions(state) {
-  return OrderedMap(mapValues(state, session => deserializeSession(session)))
+  return OrderedMap(mapValues(state, (session) => deserializeSession(session)))
 }
 
 function deserializeSession(session) {
@@ -94,8 +98,8 @@ function deserializeSession(session) {
 function deserializeResponses(responses) {
   return List(
     responses
-      .filter(r => r.isSchemaError)
-      .map(response => deserializeResponse(response)),
+      .filter((r) => r.isSchemaError)
+      .map((response) => deserializeResponse(response)),
   )
 }
 

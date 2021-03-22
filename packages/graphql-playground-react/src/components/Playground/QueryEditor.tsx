@@ -128,7 +128,7 @@ export class QueryEditor extends React.PureComponent<Props & ReduxProps, {}> {
       },
       info: {
         schema: this.props.schema,
-        renderDescription: text => md.render(text),
+        renderDescription: (text) => md.render(text),
         onClick: this.props.onClickReference,
       },
       jump: {
@@ -207,7 +207,7 @@ export class QueryEditor extends React.PureComponent<Props & ReduxProps, {}> {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.sessionId !== nextProps.sessionId) {
       this.closeCompletion()
       this.updateSessionScrollTop()
@@ -246,7 +246,7 @@ export class QueryEditor extends React.PureComponent<Props & ReduxProps, {}> {
     )
   }
 
-  setRef = ref => {
+  setRef = (ref) => {
     this.node = ref
   }
 
@@ -314,10 +314,9 @@ const mapStateToProps = createStructuredSelector({
   useTabs: getUseTabs,
 })
 
-export default connect(
-  mapStateToProps,
-  { onChange: editQuery, setScrollTop },
-)(QueryEditor)
+export default connect(mapStateToProps, { onChange: editQuery, setScrollTop })(
+  QueryEditor,
+)
 
 const Editor = styled.div`
   flex: 1 1 0%;
@@ -325,6 +324,6 @@ const Editor = styled.div`
 
   .CodeMirror {
     width: 100%;
-    background: ${p => p.theme.editorColours.editorBackground};
+    background: ${(p) => p.theme.editorColours.editorBackground};
   }
 `

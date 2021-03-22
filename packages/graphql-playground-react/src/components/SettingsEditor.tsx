@@ -79,7 +79,7 @@ class SettingsEditorHOC extends React.Component<
     super(props)
     this.state = { value: props.value }
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
       this.setState({ value: nextProps.value })
     }
@@ -93,45 +93,39 @@ class SettingsEditorHOC extends React.Component<
       />
     )
   }
-  handleChange = value => {
+  handleChange = (value) => {
     this.setState({ value })
     this.props.editSettings()
   }
   handleSave = () => {
-    this.props.onSave(this.state.value)
+    this.props.onChange(this.state.value)
     this.props.saveSettings()
   }
 }
 
-export const PlaygroundSettingsEditor = connect(
-  playgroundSettingsSelector,
-  {
-    onSave: setSettingsString,
-    editSettings,
-    saveSettings,
-  },
-)(SettingsEditorHOC)
+export const PlaygroundSettingsEditor = connect(playgroundSettingsSelector, {
+  onChange: setSettingsString,
+  editSettings,
+  saveSettings,
+})(SettingsEditorHOC)
 
 const configSelector = createStructuredSelector({
   value: getConfigString,
 })
 
-export const GraphQLConfigEditor = connect(
-  configSelector,
-  {
-    onChange: setConfigString,
-  },
-)(SettingsEditor)
+export const GraphQLConfigEditor = connect(configSelector, {
+  onChange: setConfigString,
+})(SettingsEditor)
 
 const Wrapper = styled.div`
-  background: ${p => p.theme.editorColours.resultBackground};
+  background: ${(p) => p.theme.editorColours.resultBackground};
   position: relative;
   display: flex;
   flex-flow: column;
   flex: 1 1 0;
 
   .CodeMirror {
-    background: ${p => p.theme.editorColours.resultBackground};
+    background: ${(p) => p.theme.editorColours.resultBackground};
     .CodeMirror-code {
       color: rgba(255, 255, 255, 0.7);
     }
@@ -152,7 +146,7 @@ const PlaygroundVersion = styled.span`
   position: absolute;
   right: 20px;
   bottom: 17px;
-  color: ${p => p.theme.editorColours.textInactive};
+  color: ${(p) => p.theme.editorColours.textInactive};
   font-weight: 700;
   margin-right: 14px;
 `

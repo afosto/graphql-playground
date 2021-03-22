@@ -1,6 +1,6 @@
 export function resolveRefString(str: string, values?: object): string {
   const { strings, rawRefs } = parse(str)
-  const refValues = rawRefs.map(ref => resolveRef(ref, values))
+  const refValues = rawRefs.map((ref) => resolveRef(ref, values))
 
   let res = ''
   for (let i = 0; i < refValues.length; i++) {
@@ -16,7 +16,7 @@ export function resolveEnvsInValues<T extends any>(
   env: { [name: string]: string | undefined },
 ): T {
   const config = { ...(inputConfig as any) }
-  Object.keys(config).forEach(key => {
+  Object.keys(config).forEach((key) => {
     const value = config[key]
     if (typeof value === 'string') {
       config[key] = resolveRefString(value, { env })
@@ -30,14 +30,14 @@ export function resolveEnvsInValues<T extends any>(
 export function getUsedEnvs(config: any): { [name: string]: string } {
   const result = {}
 
-  const traverse = val => {
+  const traverse = (val) => {
     if (typeof val === 'string') {
       const rawRefs = parse(val).rawRefs
       for (const ref of rawRefs) {
         result[parseRef(ref).ref] = resolveRef(ref, {}, false)
       }
     } else if (typeof val === 'object') {
-      Object.keys(config).forEach(key => {
+      Object.keys(config).forEach((key) => {
         traverse(config[key])
       })
     }

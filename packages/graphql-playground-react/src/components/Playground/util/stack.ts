@@ -14,7 +14,7 @@ export function getNewStack(root, schema, stack: Map<any, any>) {
       pointer = root[currentPath]
       y = Object.keys(root).indexOf(currentPath)
     } else {
-      const argFound = pointer.args.find(arg => arg.name === currentPath)
+      const argFound = pointer.args.find((arg) => arg.name === currentPath)
       lastPointer = pointer
       if (argFound) {
         pointer = argFound
@@ -27,7 +27,7 @@ export function getNewStack(root, schema, stack: Map<any, any>) {
         }
         pointer =
           pointer.getFields()[currentPath] ||
-          pointer.getInterfaces().find(i => i.name === currentPath)
+          pointer.getInterfaces().find((i) => i.name === currentPath)
       }
     }
     if (lastPointer) {
@@ -85,7 +85,7 @@ export function serializeRoot(schema): SerializedRoot {
   }
   const queryType = schema.getQueryType()
   const queryFieldMap = queryType.getFields()
-  obj.queries = Object.keys(queryFieldMap).map(fieldName => {
+  obj.queries = Object.keys(queryFieldMap).map((fieldName) => {
     const field = queryFieldMap[fieldName]
     field.path = fieldName
     field.parent = null
@@ -94,7 +94,7 @@ export function serializeRoot(schema): SerializedRoot {
   const mutationType = schema.getMutationType && schema.getMutationType()
   if (mutationType) {
     const mutationFieldMap = mutationType.getFields()
-    obj.mutations = Object.keys(mutationFieldMap).map(fieldName => {
+    obj.mutations = Object.keys(mutationFieldMap).map((fieldName) => {
       const field = mutationFieldMap[fieldName]
       field.path = fieldName
       field.parent = null
@@ -106,7 +106,7 @@ export function serializeRoot(schema): SerializedRoot {
     schema.getSubscriptionType && schema.getSubscriptionType()
   if (subscriptionType) {
     const subscriptionFieldMap = subscriptionType.getFields()
-    obj.subscriptions = Object.keys(subscriptionFieldMap).map(fieldName => {
+    obj.subscriptions = Object.keys(subscriptionFieldMap).map((fieldName) => {
       const field = subscriptionFieldMap[fieldName]
       field.path = fieldName
       field.parent = null
@@ -154,7 +154,7 @@ export function serialize(schema, field) {
   // Get fields
   if (type.getFields) {
     const fieldMap = type.getFields()
-    obj.fields = Object.keys(fieldMap).map(name => {
+    obj.fields = Object.keys(fieldMap).map((name) => {
       const f = fieldMap[name]
       f.parent = field
       f.path = field.path + `/${name}`

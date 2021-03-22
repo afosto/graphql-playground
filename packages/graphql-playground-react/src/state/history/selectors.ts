@@ -3,5 +3,5 @@ import { getSelectedWorkspace } from '../workspace/reducers'
 
 export const getHistory = createSelector(
   [getSelectedWorkspace],
-  state => state.history,
+  (state) => state.history,
 )

@@ -59,7 +59,7 @@ interface DocsValueProps {
 }
 
 const DocsValue = styled<DocsValueProps, 'div'>('div')`
-  margin-top: ${p => (p.first ? 0 : 6)}px;
+  margin-top: ${(p) => (p.first ? 0 : 6)}px;
   .field-name {
     padding: 0 16px;
     color: red;
@@ -68,5 +68,5 @@ const DocsValue = styled<DocsValueProps, 'div'>('div')`
 
 const DocsValueComment = styled.div`
   padding: 0 16px;
-  color: ${p => p.theme.colours.black50};
+  color: ${(p) => p.theme.colours.black50};
 `

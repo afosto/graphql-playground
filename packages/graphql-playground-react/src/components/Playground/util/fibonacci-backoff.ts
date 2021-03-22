@@ -1,5 +1,5 @@
 import { memoize } from 'lodash'
-const fibonacci = memoize(num => {
+const fibonacci = memoize((num) => {
   if (num <= 1) {
     return 1
   }

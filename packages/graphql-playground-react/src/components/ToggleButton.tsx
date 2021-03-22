@@ -45,7 +45,7 @@ const Slider = styled<SliderProps, 'div'>('div')`
   border-radius: 23px;
   cursor: pointer;
 
-  background: ${p =>
+  background: ${(p) =>
     p.checked ? p.theme.colours.green : p.theme.colours.black40};
 
   &:before {
@@ -60,6 +60,6 @@ const Slider = styled<SliderProps, 'div'>('div')`
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     transition: transform 70ms linear;
 
-    transform: ${p => (p.checked ? 'translateX(19px)' : '')};
+    transform: ${(p) => (p.checked ? 'translateX(19px)' : '')};
   }
 `

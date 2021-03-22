@@ -31,7 +31,7 @@ const Column = styled<ColumnProps, 'div'>('div')`
   flex: 0 0 auto;
   flex-flow: column;
   padding-bottom: 20px;
-  border-right: 1px solid ${p => p.theme.colours.black10};
-  overflow-x: ${p => (p.verticalScroll ? 'hidden' : 'auto')}
-  overflow-y: ${p => (p.verticalScroll ? 'scroll' : 'auto')}
+  border-right: 1px solid ${(p) => p.theme.colours.black10};
+  overflow-x: ${(p) => (p.verticalScroll ? 'hidden' : 'auto')}
+  overflow-y: ${(p) => (p.verticalScroll ? 'scroll' : 'auto')}
 `

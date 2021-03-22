@@ -160,7 +160,7 @@ export function sessionFromTab(tab: Tab): Session {
     headers: tab.headers ? JSON.stringify(tab.headers, null, 2) : '',
     responses:
       tab.responses && tab.responses.length > 0
-        ? List(tab.responses.map(r => new ResponseRecord({ date: r })))
+        ? List(tab.responses.map((r) => new ResponseRecord({ date: r })))
         : List(),
   }).set('id', cuid())
 }
@@ -216,7 +216,7 @@ const reducer = handleActions(
       const path = ['sessions', getSelectedSessionId(state), keyName]
       return state.setIn(path, payload[keyName])
     },
-    START_QUERY: state => {
+    START_QUERY: (state) => {
       return state
         .setIn(['sessions', getSelectedSessionId(state), 'queryRunning'], true)
         .setIn(
@@ -230,7 +230,7 @@ const reducer = handleActions(
         Map({ responseTracingHeight, responseTracingOpen: false }),
       )
     },
-    TOGGLE_TRACING: state => {
+    TOGGLE_TRACING: (state) => {
       const path = [
         'sessions',
         getSelectedSessionId(state),
@@ -256,7 +256,7 @@ const reducer = handleActions(
         Map({ variableEditorHeight, variableEditorOpen: true }),
       )
     },
-    TOGGLE_VARIABLES: state => {
+    TOGGLE_VARIABLES: (state) => {
       const path = [
         'sessions',
         getSelectedSessionId(state),
@@ -265,26 +265,26 @@ const reducer = handleActions(
       return state.setIn(path, !state.getIn(path))
     },
     ADD_RESPONSE: (state, { payload: { response, sessionId } }) => {
-      return state.updateIn(['sessions', sessionId, 'responses'], responses =>
+      return state.updateIn(['sessions', sessionId, 'responses'], (responses) =>
         responses.push(response),
       )
     },
     SET_RESPONSE: (state, { payload: { response, sessionId } }) => {
       return state.setIn(['sessions', sessionId, 'responses'], List([response]))
     },
-    CLEAR_RESPONSES: state => {
+    CLEAR_RESPONSES: (state) => {
       return state.setIn(
         ['sessions', getSelectedSessionId(state), 'responses'],
         List(),
       )
     },
-    FETCH_SCHEMA: state => {
+    FETCH_SCHEMA: (state) => {
       return state.setIn(
         ['sessions', getSelectedSessionId(state), 'isReloadingSchema'],
         true,
       )
     },
-    REFETCH_SCHEMA: state => {
+    REFETCH_SCHEMA: (state) => {
       return state.setIn(
         ['sessions', getSelectedSessionId(state), 'isReloadingSchema'],
         true,
@@ -315,6 +315,7 @@ const reducer = handleActions(
           if (
             response &&
             session.responses!.size === 1 &&
+            // @ts-ignore
             response.isSchemaError
           ) {
             data.responses = List([])
@@ -374,7 +375,7 @@ const reducer = handleActions(
       state.set('selectedSessionId', sessionId),
     OPEN_SETTINGS_TAB: (state: any) => {
       let newState = state
-      let settingsTab = state.sessions.find(value =>
+      let settingsTab = state.sessions.find((value) =>
         value.get('isSettingsTab', false),
       )
       if (!settingsTab) {
@@ -388,9 +389,9 @@ const reducer = handleActions(
       }
       return newState.set('selectedSessionId', settingsTab.id)
     },
-    OPEN_CONFIG_TAB: state => {
+    OPEN_CONFIG_TAB: (state) => {
       let newState = state
-      let configTab = state.sessions.find(value =>
+      let configTab = state.sessions.find((value) =>
         value.get('isConfigTab', false),
       )
       if (!configTab) {
@@ -407,7 +408,7 @@ const reducer = handleActions(
     NEW_FILE_TAB: (state, { payload: { fileName, filePath, file } }) => {
       let newState = state
       let fileTab = state.sessions.find(
-        value => value.get('name', '') === fileName,
+        (value) => value.get('name', '') === fileName,
       )
       if (!fileTab) {
         fileTab = makeSession().merge({
@@ -492,14 +493,14 @@ const reducer = handleActions(
         .setIn(['sessions', session.id], session)
         .set('sessionCount', state.sessions.size + 1)
     },
-    CLOSE_SELECTED_TAB: state => {
+    CLOSE_SELECTED_TAB: (state) => {
       const selectedSessionId = getSelectedSessionId(state)
       return closeTab(state, selectedSessionId).set(
         'sessionCount',
         state.sessions.size - 1,
       )
     },
-    SELECT_NEXT_TAB: state => {
+    SELECT_NEXT_TAB: (state) => {
       const selectedSessionId = getSelectedSessionId(state)
       const count = state.sessions.size
       const keys = state.sessions.keySeq()
@@ -509,7 +510,7 @@ const reducer = handleActions(
       }
       return state.set('selectedSessionId', keys.get(0))
     },
-    SELECT_PREV_TAB: state => {
+    SELECT_PREV_TAB: (state) => {
       const selectedSessionId = getSelectedSessionId(state)
       const count = state.sessions.size
       const keys = state.sessions.keySeq()
@@ -547,37 +548,37 @@ const reducer = handleActions(
       }
       return state.set('sessions', newSessions)
     },
-    EDIT_SETTINGS: state => {
+    EDIT_SETTINGS: (state) => {
       return state.setIn(
         ['sessions', getSelectedSessionId(state), 'changed'],
         true,
       )
     },
-    SAVE_SETTINGS: state => {
+    SAVE_SETTINGS: (state) => {
       return state.setIn(
         ['sessions', getSelectedSessionId(state), 'changed'],
         false,
       )
     },
-    EDIT_CONFIG: state => {
+    EDIT_CONFIG: (state) => {
       return state.setIn(
         ['sessions', getSelectedSessionId(state), 'changed'],
         true,
       )
     },
-    SAVE_CONFIG: state => {
+    SAVE_CONFIG: (state) => {
       return state.setIn(
         ['sessions', getSelectedSessionId(state), 'changed'],
         false,
       )
     },
-    EDIT_FILE: state => {
+    EDIT_FILE: (state) => {
       return state.setIn(
         ['sessions', getSelectedSessionId(state), 'changed'],
         true,
       )
     },
-    SAVE_FILE: state => {
+    SAVE_FILE: (state) => {
       return state.setIn(
         ['sessions', getSelectedSessionId(state), 'changed'],
         false,

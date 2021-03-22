@@ -55,7 +55,7 @@ class GraphQLBinApp extends React.Component<Props & ReduxProps, State> {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (this.props.match.params.id) {
       if (this.props.match.params.id === 'new') {
         return
@@ -93,8 +93,8 @@ class GraphQLBinApp extends React.Component<Props & ReduxProps, State> {
           variables: { id: this.props.match.params.id },
         }),
       })
-        .then(res => res.json())
-        .then(res => {
+        .then((res) => res.json())
+        .then((res) => {
           if (loadingWrapper) {
             loadingWrapper.classList.add('fadeOut')
           }
@@ -125,7 +125,7 @@ class GraphQLBinApp extends React.Component<Props & ReduxProps, State> {
     return (
       <Wrapper>
         {this.state.loading ? null : !this.state.endpoint ||
-        this.state.endpoint.length === 0 ? (
+          this.state.endpoint.length === 0 ? (
           <ThemeProvider theme={styledTheme}>
             <EndpointPopup
               onRequestClose={this.handleChangeEndpoint}
@@ -144,16 +144,13 @@ class GraphQLBinApp extends React.Component<Props & ReduxProps, State> {
     )
   }
 
-  private handleChangeEndpoint = endpoint => {
+  private handleChangeEndpoint = (endpoint) => {
     this.setState({ endpoint })
     localStorage.setItem('last-endpoint', endpoint)
   }
 }
 
-const ConnectedGraphQLBinApp = connect(
-  null,
-  { injectState },
-)(GraphQLBinApp)
+const ConnectedGraphQLBinApp = connect(null, { injectState })(GraphQLBinApp)
 
 // tslint:disable
 export default class GraphQLBinAppHOC extends React.Component<Props> {

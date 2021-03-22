@@ -34,12 +34,12 @@ const defaultTypes = [
 (A component that is similar to the DocsExplorer) to consume */
 export function sdlArray(schema: GraphQLSchema, options?: Options) {
   const objectValues =
-    Object.values || (obj => Object.keys(obj).map(key => obj[key]))
+    Object.values || ((obj) => Object.keys(obj).map((key) => obj[key]))
   const typeMap = schema.getTypeMap()
   const types = objectValues(typeMap)
     .sort((type1, type2) => type1.name.localeCompare(type2.name))
-    .filter(type => !defaultTypes.includes(type.name))
-    .map(type => ({
+    .filter((type) => !defaultTypes.includes(type.name))
+    .map((type) => ({
       ...type,
       ...serialize(schema, type),
       instanceOf: getTypeInstance(type),
@@ -61,25 +61,6 @@ function getTypeInstance(type) {
   }
 }
 
-// Adds Line Breaks to Schema View
-function addLineBreaks(sdl: string, commentsDisabled: boolean = true) {
-  const noNewLines = sdl.replace(/^\s*$(?:\r\n?|\n)/gm, '')
-  // Line Break all Brackets
-  const breakBrackets = noNewLines.replace(/[}]/gm, '$&\r\n')
-  // Line Break all Scalars
-  const withLineBreaks = breakBrackets.replace(/(?:scalar )\w+/g, '$&\r\n')
-
-  if (commentsDisabled) {
-    return withLineBreaks
-  }
-  // Special Line Breaking for Comments
-  const withCommentLineBreaks = withLineBreaks.replace(
-    /(?:\#[\w\'\s\r\n\*](.*)$)/gm,
-    '$&\r',
-  )
-  return withCommentLineBreaks
-}
-
 // Returns a prettified schema
 export function getSDL(
   schema: GraphQLSchema | null | undefined,
@@ -89,21 +70,18 @@ export function getSDL(
     const rawSdl = printSchema(schema, { commentDescriptions: true })
     if (commentsDisabled) {
       // Removes Comments but still has new lines
-      const sdlWithNewLines = rawSdl.replace(/(\#[\w\'\s\r\n\*](.*)$)/gm, '')
       // Removes newlines left behind by Comments
-      const sdlWithoutComments = prettify(sdlWithNewLines, {
+      return prettify(rawSdl, {
         printWidth: 80,
         tabWidth: 2,
         useTabs: false,
       })
-      return addLineBreaks(sdlWithoutComments, commentsDisabled)
     }
-    const sdl = prettify(rawSdl, {
+    return prettify(rawSdl, {
       printWidth: 80,
       tabWidth: 2,
       useTabs: false,
     })
-    return addLineBreaks(sdl)
   }
   return ''
 }

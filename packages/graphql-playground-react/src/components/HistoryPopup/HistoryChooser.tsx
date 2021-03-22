@@ -61,15 +61,15 @@ interface FilterProps {
 const Filter = styled<FilterProps, 'div'>('div')`
   box-sizing: content-box;
   height: 24px;
-  z-index: ${p => (p.active ? 2 : 0)};
+  z-index: ${(p) => (p.active ? 2 : 0)};
   display: flex;
   align-items: center;
   margin: 0 -2px;
-  padding: ${p => (p.active ? '7px 9px 8px 9px' : '5px 13px 6px 13px')};
-  background: ${p =>
+  padding: ${(p) => (p.active ? '7px 9px 8px 9px' : '5px 13px 6px 13px')};
+  background: ${(p) =>
     p.active ? p.theme.colours.green : p.theme.colours.black07};
 
-  color: ${p => (p.active ? p.theme.colours.white : p.theme.colours.black30)};
+  color: ${(p) => (p.active ? p.theme.colours.white : p.theme.colours.black30)};
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;

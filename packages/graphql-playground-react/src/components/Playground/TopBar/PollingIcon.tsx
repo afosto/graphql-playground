@@ -8,7 +8,7 @@ export interface Props {
   onClick?: () => void
 }
 
-const PollingIcon: React.SFC<Props> = props => (
+const PollingIcon: React.SFC<Props> = (props) => (
   <Positioner onClick={props.onClick} title="Polling Schema">
     <Icon animate={props.animate} />
   </Positioner>
@@ -38,9 +38,9 @@ const Icon = styled.div`
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: ${p => p.theme.editorColours.pollingIcon};
-  box-shadow: 0 0 0 ${p => p.theme.editorColours.pollingIconShadow};
-  ${p =>
+  background: ${(p) => p.theme.editorColours.pollingIcon};
+  box-shadow: 0 0 0 ${(p) => p.theme.editorColours.pollingIconShadow};
+  ${(p) =>
     p.animate
       ? css`
           animation: ${pulse} 2s infinite;

@@ -51,7 +51,7 @@ export default class FieldDoc extends React.Component<Props, State> {
     scrollToRight(explorerDoc, explorerDoc.scrollWidth, 50)
   }
 
-  setRef = ref => {
+  setRef = (ref) => {
     this.ref = ref
   }
 
@@ -93,10 +93,9 @@ export default class FieldDoc extends React.Component<Props, State> {
         />
 
         <CategoryTitle>{`${typeInstance} details`}</CategoryTitle>
-        {type.description &&
-          type.description.length > 0 && (
-            <DocsDescription markdown={type.description || ''} />
-          )}
+        {type.description && type.description.length > 0 && (
+          <DocsDescription markdown={type.description || ''} />
+        )}
         {type instanceof GraphQLScalarType && <ScalarTypeSchema type={type} />}
         {type instanceof GraphQLEnumType && <EnumTypeSchema type={type} />}
         {type instanceof GraphQLUnionType && (
@@ -108,52 +107,49 @@ export default class FieldDoc extends React.Component<Props, State> {
           />
         )}
 
-        {obj.fields &&
-          obj.fields.length > 0 && (
-            <DocTypeSchema
-              type={type}
-              fields={obj.fields}
-              interfaces={obj.interfaces}
-              level={level}
-              sessionId={this.props.sessionId}
-            />
-          )}
+        {obj.fields && obj.fields.length > 0 && (
+          <DocTypeSchema
+            type={type}
+            fields={obj.fields}
+            interfaces={obj.interfaces}
+            level={level}
+            sessionId={this.props.sessionId}
+          />
+        )}
 
-        {obj.args &&
-          obj.args.length > 0 && (
-            <div>
-              <CategoryTitle>arguments</CategoryTitle>
-              {obj.args.map((arg, index) => (
-                <div key={arg.name}>
-                  <div>
-                    <Argument
-                      arg={arg}
-                      x={level}
-                      y={index + argsOffset}
-                      sessionId={this.props.sessionId}
-                    />
-                  </div>
+        {obj.args && obj.args.length > 0 && (
+          <div>
+            <CategoryTitle>arguments</CategoryTitle>
+            {obj.args.map((arg, index) => (
+              <div key={arg.name}>
+                <div>
+                  <Argument
+                    arg={arg}
+                    x={level}
+                    y={index + argsOffset}
+                    sessionId={this.props.sessionId}
+                  />
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
+        )}
 
-        {obj.implementations &&
-          obj.implementations.length > 0 && (
-            <div>
-              <CategoryTitle>implementations</CategoryTitle>
-              {obj.implementations.map((data, index) => (
-                <TypeLink
-                  key={data.name}
-                  type={data}
-                  x={level}
-                  y={index + implementationsOffset}
-                  collapsable={true}
-                  lastActive={false}
-                />
-              ))}
-            </div>
-          )}
+        {obj.implementations && obj.implementations.length > 0 && (
+          <div>
+            <CategoryTitle>implementations</CategoryTitle>
+            {obj.implementations.map((data, index) => (
+              <TypeLink
+                key={data.name}
+                type={data}
+                x={level}
+                y={index + implementationsOffset}
+                collapsable={true}
+                lastActive={false}
+              />
+            ))}
+          </div>
+        )}
       </div>
     )
   }
@@ -175,7 +171,7 @@ const scrollToRight = (element: Element, to: number, duration: number) => {
 }
 
 const DocsHeader = styled.div`
-  background: ${p => p.theme.colours.black02};
+  background: ${(p) => p.theme.colours.black02};
   padding-top: 20px;
   padding-bottom: 10px;
 

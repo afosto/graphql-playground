@@ -19,5 +19,5 @@ export const {
   }),
   CHANGE_WIDTH_DOCS: (sessionId, width) => ({ sessionId, width }),
   CHANGE_KEY_MOVE: (sessionId, move) => ({ sessionId, move }),
-  SHOW_DOC_FOR_REFERENCE: reference => ({ reference }),
+  SHOW_DOC_FOR_REFERENCE: (reference) => ({ reference }),
 })

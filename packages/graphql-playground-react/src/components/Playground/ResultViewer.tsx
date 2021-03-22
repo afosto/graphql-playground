@@ -95,7 +95,7 @@ export class ResultViewer extends React.Component<Props, {}> {
     )
   }
 
-  setRef = ref => {
+  setRef = (ref) => {
     this.node = ref
   }
 
@@ -123,10 +123,10 @@ const Result = styled<ResultProps, 'div'>('div')`
   position: relative;
   display: flex;
   flex: 1;
-  height: ${props => (props.isSubscription ? 'auto' : '100%')};
+  height: ${(props) => (props.isSubscription ? 'auto' : '100%')};
   .CodeMirror {
-    height: ${props => (props.isSubscription ? 'auto' : '100%')};
-    position: ${props => (props.isSubscription ? 'relative' : 'absolute%')};
+    height: ${(props) => (props.isSubscription ? 'auto' : '100%')};
+    position: ${(props) => (props.isSubscription ? 'relative' : 'absolute%')};
     box-sizing: border-box;
     background: none;
     padding-left: 38px;
@@ -135,8 +135,7 @@ const Result = styled<ResultProps, 'div'>('div')`
     display: none !important;
   }
   .CodeMirror-scroll {
-    overflow: auto !important;
-    max-width: 50vw;
+    overflow: scroll !important;
     margin-right: 10px;
   }
   .CodeMirror-sizer {
@@ -147,6 +146,6 @@ const Result = styled<ResultProps, 'div'>('div')`
     padding: 0;
   }
   .cm-string {
-    color: ${p => p.theme.editorColours.property} !important;
+    color: ${(p) => p.theme.editorColours.property} !important;
   }
 `

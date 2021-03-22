@@ -2,7 +2,7 @@ import { is } from 'immutable'
 
 export function immutableMemoize(fn) {
   let lastValue
-  return arg => {
+  return (arg) => {
     const newValue = fn(arg)
     if (!is(lastValue, newValue)) {
       lastValue = newValue

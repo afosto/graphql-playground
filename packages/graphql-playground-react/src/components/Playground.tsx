@@ -70,13 +70,13 @@ export interface Props {
   isEndpoint?: boolean
   isApp?: boolean
   onChangeEndpoint?: (endpoint: string) => void
-  share: (state: any) => void
+  share?: (state: any) => void
   shareUrl?: string
   onChangeSubscriptionsEndpoint?: (endpoint: string) => void
   getRef?: (ref: Playground) => void
   graphqlConfig?: any
-  onSaveSettings: () => void
-  onChangeSettings: (settingsString: string) => void
+  onSaveSettings?: () => void
+  onChangeSettings?: (settingsString: string) => void
   onSaveConfig: () => void
   onChangeConfig: (configString: string) => void
   onUpdateSessionCount?: () => void
@@ -85,7 +85,7 @@ export interface Props {
   configIsYaml: boolean
   canSaveConfig: boolean
   fixedEndpoints: boolean
-  headers?: any
+  headers?: { [key: string]: string }
   configPath?: string
   createApolloLink?: (
     session: Session,
@@ -106,7 +106,10 @@ export interface ReduxProps {
   saveConfig: () => void
   saveSettings: () => void
   setTracingSupported: (value: boolean) => void
-  injectHeaders: (headers: string, endpoint: string) => void
+  injectHeaders: (
+    headers: string | { [key: string]: string } | void,
+    endpoint: string,
+  ) => void
   setConfigString: (str: string) => void
   schemaFetchingError: (endpoint: string, error: string) => void
   schemaFetchingSuccess: (
@@ -195,7 +198,7 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
     setSubscriptionEndpoint(props.subscriptionEndpoint)
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // init redux
     this.props.initState(getWorkspaceId(this.props), this.props.endpoint)
     this.props.setConfigString(this.props.configString)
@@ -211,7 +214,7 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
     this.mounted = true
   }
 
-  componentWillReceiveProps(nextProps: Props & ReduxProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props & ReduxProps) {
     if (this.props.createApolloLink !== nextProps.createApolloLink) {
       setLinkCreator(nextProps.createApolloLink)
     }
@@ -251,20 +254,31 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
   }
 
   async schemaGetter(propsInput?: Props & ReduxProps) {
-    const props = this.props || propsInput
+    const props = propsInput || this.props
     const endpoint = props.sessionEndpoint || props.endpoint
     const currentSchema = this.state.schema
+    const globalHeaders = props.settings['request.globalHeaders']
+
     try {
       const data = {
         endpoint,
         headers:
           props.sessionHeaders && props.sessionHeaders.length > 0
-            ? props.sessionHeaders
-            : JSON.stringify(props.headers),
+            ? JSON.stringify({
+                ...globalHeaders,
+                ...JSON.parse(props.sessionHeaders),
+              })
+            : JSON.stringify({
+                ...globalHeaders,
+                ...props.headers,
+              }),
         credentials: props.settings['request.credentials'],
+        useTracingHeader:
+          !this.initialSchemaFetch &&
+          props.settings['tracing.tracingSupported'],
       }
       const schema = await schemaFetcher.fetch(data)
-      schemaFetcher.subscribe(data, newSchema => {
+      schemaFetcher.subscribe(data, (newSchema) => {
         if (
           data.endpoint === this.props.endpoint ||
           data.endpoint === this.props.sessionEndpoint
@@ -324,10 +338,7 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
         <ToolbarWrapper>
           <Settings />
           {this.props.oauth && (
-            <UserManager
-              {...this.props.oauth}
-              endpoint={this.props.endpoint}
-            />
+            <UserManager {...this.props.oauth} endpoint={this.props.endpoint} />
           )}
         </ToolbarWrapper>
         {this.props.historyOpen && this.renderHistoryPopup()}
@@ -415,24 +426,21 @@ const mapStateToProps = createStructuredSelector({
   sessionEndpoint: getEndpoint,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    selectTabIndex,
-    selectNextTab,
-    selectPrevTab,
-    newSession,
-    closeSelectedTab,
-    initState,
-    saveSettings,
-    saveConfig,
-    setTracingSupported,
-    injectHeaders,
-    setConfigString,
-    schemaFetchingError,
-    schemaFetchingSuccess,
-  },
-)(Playground)
+export default connect(mapStateToProps, {
+  selectTabIndex,
+  selectNextTab,
+  selectPrevTab,
+  newSession,
+  closeSelectedTab,
+  initState,
+  saveSettings,
+  saveConfig,
+  setTracingSupported,
+  injectHeaders,
+  setConfigString,
+  schemaFetchingError,
+  schemaFetchingSuccess,
+})(Playground)
 
 const PlaygroundContainer = styled.div`
   flex: 1;

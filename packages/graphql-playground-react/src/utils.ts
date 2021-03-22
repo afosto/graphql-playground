@@ -3,7 +3,7 @@ import * as graphql from 'prettier/parser-graphql'
 // tslint:disable
 
 export function safely(cb: any) {
-  return function*(...args) {
+  return function* (...args) {
     try {
       yield cb(...args)
     } catch (e) {

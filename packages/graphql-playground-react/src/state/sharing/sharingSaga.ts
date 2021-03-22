@@ -27,7 +27,7 @@ function* share() {
         endpoint,
       },
     }),
-  }).then(data => data.json())
+  }).then((data) => data.json())
 
   const shareUrl = `https://graphqlbin.com/v2/${res.data.addSession.id}`
   yield put(setShareUrl(shareUrl))
@@ -39,11 +39,11 @@ function* makeSharingState() {
 
   const id = cuid()
   state = state
-    .update('workspaces', w =>
+    .update('workspaces', (w) =>
       w.filter((workspace, key) => key === state.selectedWorkspace),
     )
     .set('selectedWorkspace', `${id}~${state.selectedWorkspace}`)
-    .update('workspaces', w => w.mapKeys(k => `${id}~${k}`))
+    .update('workspaces', (w) => w.mapKeys((k) => `${id}~${k}`))
 
   const selectedSessionId = state.workspaces.get(state.selectedWorkspace)
     .sessions.selectedSessionId
@@ -52,7 +52,8 @@ function* makeSharingState() {
     state = state
       .updateIn(
         ['workspaces', state.selectedWorkspace, 'sessions', 'sessions'],
-        sessions => sessions.filter((value, key) => key === selectedSessionId),
+        (sessions) =>
+          sessions.filter((value, key) => key === selectedSessionId),
       )
       .setIn(
         ['workspaces', state.selectedWorkspace, 'sessions', 'sessionCount'],
@@ -63,7 +64,7 @@ function* makeSharingState() {
   if (!sharing.headers) {
     state = state.updateIn(
       ['workspaces', state.selectedWorkspace, 'sessions', 'sessions'],
-      sessions => sessions.map(session => session.set('headers', '')),
+      (sessions) => sessions.map((session) => session.set('headers', '')),
     )
   }
 

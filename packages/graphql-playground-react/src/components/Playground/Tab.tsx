@@ -103,7 +103,7 @@ class Tab extends React.PureComponent<Props & ReduxProps, State> {
     this.setState({ editingName: false })
   }
 
-  private handleKeyDown = e => {
+  private handleKeyDown = (e) => {
     if (e.keyCode === 13) {
       this.setState({ editingName: false })
     }
@@ -126,15 +126,12 @@ class Tab extends React.PureComponent<Props & ReduxProps, State> {
     this.props.closeTab(this.props.session.id)
   }
 
-  private handleEditName = e => {
+  private handleEditName = (e) => {
     this.props.editName(e.target.value)
   }
 }
 
-export default connect(
-  null,
-  { closeTab, selectTab, editName },
-)(Tab)
+export default connect(null, { closeTab, selectTab, editName })(Tab)
 
 interface TabItemProps {
   active: boolean
@@ -152,14 +149,14 @@ const TabItem = styled<TabItemProps, 'div'>('div')`
   margin-right: 10px;
   font-size: 14px;
   border-radius: 2px;
-  border-bottom: 2px solid ${p => p.theme.editorColours.navigationBar};
+  border-bottom: 2px solid ${(p) => p.theme.editorColours.navigationBar};
   box-sizing: border-box;
   cursor: pointer;
   user-select: none;
-  background: ${p =>
+  background: ${(p) =>
     p.active ? p.theme.editorColours.tab : p.theme.editorColours.tabInactive};
   &:hover {
-    background: ${p => p.theme.editorColours.tab};
+    background: ${(p) => p.theme.editorColours.tab};
     .close {
       opacity: 1;
     }
@@ -167,9 +164,9 @@ const TabItem = styled<TabItemProps, 'div'>('div')`
 `
 
 const OperationName = styled<TabItemProps, 'div'>('div')`
-  opacity: ${p => (p.active ? 1 : 0.5)};
+  opacity: ${(p) => (p.active ? 1 : 0.5)};
   background: transparent;
-  color: ${p => p.theme.editorColours.tabText};
+  color: ${(p) => p.theme.editorColours.tabText};
   font-size: 14px;
   margin-left: 2px;
   display: inline;
@@ -179,7 +176,7 @@ const OperationName = styled<TabItemProps, 'div'>('div')`
 const OperationNameInput = styled(AutosizeInput)`
   input {
     background: transparent;
-    color: ${p => p.theme.editorColours.tabText};
+    color: ${(p) => p.theme.editorColours.tabText};
     font-size: 14px;
     margin-left: 2px;
     display: inline;
@@ -190,7 +187,7 @@ const OperationNameInput = styled(AutosizeInput)`
 const Icons = styled<TabItemProps, 'div'>('div')`
   display: flex;
   align-items: center;
-  opacity: ${p => (p.active ? 1 : 0.5)};
+  opacity: ${(p) => (p.active ? 1 : 0.5)};
 `
 
 const QueryTypes = styled.div`
@@ -211,15 +208,15 @@ const QueryType = styled.div`
 `
 
 const Query = styled(QueryType)`
-  background: ${p => p.theme.colours.blue};
+  background: ${(p) => p.theme.colours.blue};
 `
 
 const Mutation = styled(QueryType)`
-  background: ${p => p.theme.colours.orange};
+  background: ${(p) => p.theme.colours.orange};
 `
 
 const Subscription = styled(QueryType)`
-  background: ${p => p.theme.colours.purple};
+  background: ${(p) => p.theme.colours.purple};
 `
 
 const RedDot = styled.div`
@@ -234,7 +231,7 @@ const Circle = styled.div`
   position: relative;
   top: -2px;
   font-size: 9px;
-  background: ${p => p.theme.editorColours.circle};
+  background: ${(p) => p.theme.editorColours.circle};
 `
 
 const Close = styled<TabItemProps, 'div'>('div')`
@@ -244,8 +241,8 @@ const Close = styled<TabItemProps, 'div'>('div')`
   top: 1px;
   height: 13px;
   width: 13px;
-  opacity: ${p => (p.active || p.hasCircle ? 1 : 0)};
+  opacity: ${(p) => (p.active || p.hasCircle ? 1 : 0)};
   svg {
-    stroke: ${p => p.theme.editorColours.icon};
+    stroke: ${(p) => p.theme.editorColours.icon};
   }
 `

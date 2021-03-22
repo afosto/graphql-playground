@@ -50,9 +50,9 @@ class UserManager extends React.Component<Props, State> {
     })
 
     this.state = { userManager }
-    userManager.events.addUserLoaded(user => this.setState({ user }))
+    userManager.events.addUserLoaded((user) => this.setState({ user }))
     userManager.events.addUserUnloaded(() => this.setState({ user: null }))
-    userManager.getUser().then(user => this.setState({ user }))
+    userManager.getUser().then((user) => this.setState({ user }))
   }
 
   render() {
@@ -132,7 +132,7 @@ class UserManager extends React.Component<Props, State> {
     return `${ret}oauth2-redirect.html`
   }
 
-  generateSilentRedirectUri = redirectUri => {
+  generateSilentRedirectUri = (redirectUri) => {
     const ret = new URL(redirectUri)
     const search = new URLSearchParams(ret.search)
     search.append('silent', 'true')
@@ -155,10 +155,7 @@ const mapStateToProps = createStructuredSelector({
   sessionHeaders: getHeaders,
 })
 
-export default connect(
-  mapStateToProps,
-  { editHeaders },
-)(UserManager)
+export default connect(mapStateToProps, { editHeaders })(UserManager)
 
 const Wrapper = styled.div`
   margin: 5px;
@@ -169,13 +166,13 @@ const IconWrapper = styled.div`
   cursor: pointer;
 
   svg {
-    fill: ${p => p.theme.editorColours.icon};
+    fill: ${(p) => p.theme.editorColours.icon};
     transition: 0.1s linear fill;
   }
 
   &:hover {
     svg {
-      fill: ${p => p.theme.editorColours.iconHover};
+      fill: ${(p) => p.theme.editorColours.iconHover};
     }
   }
 `

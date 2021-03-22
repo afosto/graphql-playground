@@ -22,15 +22,15 @@ import { styled } from '../../styled'
 /* tslint:disable */
 
 interface Props {
-  onHintInformationRender: () => void
+  onHintInformationRender: (elem) => void
   onRunQuery: () => void
-  prettifyQuery: () => void
+  prettifyQuery?: () => void
   getRef?: (editor: VariableEditor) => void
 }
 
 interface ReduxProps {
   value: string
-  variableToType: VariableToType
+  variableToType?: VariableToType
   onChange: (variable: string) => void
 }
 
@@ -186,7 +186,7 @@ class VariableEditor extends React.PureComponent<Props & ReduxProps> {
   render() {
     return (
       <Editor
-        ref={node => {
+        ref={(node) => {
           this._node = node
         }}
       />
@@ -237,23 +237,17 @@ const mapStateToVariablesProps = createStructuredSelector({
   variableToType: getVariableToType,
 })
 
-export const VariableEditorComponent = connect(
-  mapStateToVariablesProps,
-  {
-    onChange: editVariables,
-  },
-)(VariableEditor)
+export const VariableEditorComponent = connect(mapStateToVariablesProps, {
+  onChange: editVariables,
+})(VariableEditor)
 
 const mapStateToHeadersProps = createStructuredSelector({
   value: getHeaders,
 })
 
-export const HeadersEditorComponent = connect(
-  mapStateToHeadersProps,
-  {
-    onChange: editHeaders,
-  },
-)(VariableEditor)
+export const HeadersEditorComponent = connect(mapStateToHeadersProps, {
+  onChange: editHeaders,
+})(VariableEditor)
 
 const Editor = styled.div`
   flex: 1;

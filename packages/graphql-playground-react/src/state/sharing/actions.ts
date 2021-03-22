@@ -11,5 +11,5 @@ export const {
   TOGGLE_SHARE_HEADERS: () => ({}),
   TOGGLE_SHARE_ALL_TABS: () => ({}),
   SHARE: () => ({}),
-  SET_SHARE_URL: shareUrl => ({ shareUrl }),
+  SET_SHARE_URL: (shareUrl) => ({ shareUrl }),
 })

@@ -132,7 +132,7 @@ export class ConfigEditor extends React.Component<Props, {}> {
     )
   }
 
-  setNode = node => {
+  setNode = (node) => {
     this.node = node
   }
 
@@ -178,6 +178,6 @@ const Editor = styled.div`
   height: 100%;
   position: relative;
   .CodeMirror-linenumbers {
-    background: ${p => p.theme.editorColours.resultBackground};
+    background: ${(p) => p.theme.editorColours.resultBackground};
   }
 `

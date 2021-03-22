@@ -98,18 +98,20 @@ class SDLEditor extends React.PureComponent<Props, { overflowY: boolean }> {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.sessionId !== nextProps.sessionId) {
       this.editor.scrollTo(0, 0)
     }
   }
 
   componentWillUnmount() {
-    this.editor.off('scroll')
-    this.editor = null
+    if (this.editor) {
+      this.editor.off('scroll')
+      this.editor = null
+    }
   }
 
-  handleScroll = e => {
+  handleScroll = (e) => {
     if (e.doc.scrollTop > 0) {
       return this.setState({
         overflowY: true,
@@ -130,7 +132,7 @@ class SDLEditor extends React.PureComponent<Props, { overflowY: boolean }> {
     )
   }
 
-  setRef = ref => {
+  setRef = (ref) => {
     this.node = ref
   }
 
@@ -150,7 +152,7 @@ const Editor = styled.div`
   overflow-x: hidden;
   overflow-y: scroll;
   .CodeMirror {
-    background: ${p =>
+    background: ${(p) =>
       p.theme.mode === 'dark'
         ? p.theme.editorColours.editorBackground
         : 'white'};

@@ -5,6 +5,9 @@ import { throttle } from 'lodash'
 import { Button } from './Button'
 import { styled, css } from '../styled'
 
+// @ts-ignore
+import imageSource from '../assets/logo.png'
+
 export interface Props {
   onRequestClose: (endpoint: string) => void
   endpoint: string
@@ -33,10 +36,10 @@ export default class EndpointPopup extends React.Component<Props, State> {
       }`,
         }),
       })
-        .then(res => {
+        .then((res) => {
           this.setState({ valid: res.status < 400 })
         })
-        .catch(err => {
+        .catch((err) => {
           this.setState({ valid: false })
         })
     }
@@ -60,7 +63,7 @@ export default class EndpointPopup extends React.Component<Props, State> {
         <Wrapper>
           <LogoWrapper>
             <Logo>
-              <img src={require('../assets/logo.png')} alt="" />
+              <img src={imageSource} alt="" />
               <Heading>GraphQL Playground</Heading>
             </Logo>
           </LogoWrapper>
@@ -86,11 +89,11 @@ export default class EndpointPopup extends React.Component<Props, State> {
     )
   }
 
-  private onChangeEndpoint = e => {
+  private onChangeEndpoint = (e) => {
     this.setState({ endpoint: e.target.value }, this.checkEndpoint)
   }
 
-  private submit = e => {
+  private submit = (e) => {
     e.preventDefault()
     this.close()
   }
@@ -112,12 +115,12 @@ const Form = styled.form`
   flex: 1 1 auto;
 
   .button.button {
-    padding-right: ${p => p.theme.sizes.small16};
-    padding-left: ${p => p.theme.sizes.small16};
+    padding-right: ${(p) => p.theme.sizes.small16};
+    padding-left: ${(p) => p.theme.sizes.small16};
     background: #da1b7f;
 
     &:hover {
-      background: ${p => p.theme.colours.purple};
+      background: ${(p) => p.theme.colours.purple};
     }
   }
 `
@@ -157,7 +160,7 @@ const Input = styled<InputProps, 'input'>('input')`
 const Heading = styled.h1`
   margin-left: 38px;
   font-weight: 400;
-  color: ${p => p.theme.colours.white80};
+  color: ${(p) => p.theme.colours.white80};
 `
 
 const LogoWrapper = styled.div`

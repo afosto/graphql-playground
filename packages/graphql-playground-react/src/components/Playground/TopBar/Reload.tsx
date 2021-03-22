@@ -6,7 +6,7 @@ export interface Props {
   onReloadSchema?: () => void
 }
 
-const Reload: React.SFC<Props> = props => (
+const Reload: React.SFC<Props> = (props) => (
   <ReloadIcon
     animate={props.isReloadingSchema}
     onClick={props.onReloadSchema}

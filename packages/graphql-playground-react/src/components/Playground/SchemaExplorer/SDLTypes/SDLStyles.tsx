@@ -11,10 +11,10 @@ export const SchemaExplorerContainer = styled.div`
   flex-wrap: wrap;
   align-items: stretch;
   padding: 0px 8px 8px 8px;
-  background: ${p =>
+  background: ${(p) =>
     p.theme.mode === 'dark' ? p.theme.editorColours.editorBackground : 'white'};
-  font-family: ${p => p.theme.settings['editor.fontFamily']};
-  font-size: ${p => `${p.theme.settings['editor.fontSize']}px`};
+  font-family: ${(p) => p.theme.settings['editor.fontFamily']};
+  font-size: ${(p) => `${p.theme.settings['editor.fontSize']}px`};
   outline: none !important;
 `
 
@@ -34,6 +34,6 @@ const Column = styled<SDLColumnProps, 'div'>('div')`
   flex: 1 0 auto;
   flex-flow: column;
   padding-bottom: 20px;
-  border-right: 1px solid ${p => p.theme.colours.black10};
+  border-right: 1px solid ${(p) => p.theme.colours.black10};
   overflow: hidden;
 `

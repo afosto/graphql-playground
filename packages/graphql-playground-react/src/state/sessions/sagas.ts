@@ -1,12 +1,11 @@
 import {
   takeLatest,
   ForkEffect,
-  call,
+  delay,
   select,
   takeEvery,
   put,
 } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
 import { getSelectedSession, getIsPollingSchema } from './selectors'
 import getSelectedOperationName from '../../components/Playground/util/getSelectedOperationName'
 import { getQueryFacts } from '../../components/Playground/util/getQueryFacts'
@@ -38,12 +37,12 @@ import { parse } from 'graphql'
 import { Session } from './reducers'
 import { safely, prettify } from '../../utils'
 import * as queryString from 'query-string'
+import { parseHeaders } from '../../components/Playground/util/parseHeaders'
 
 function* setQueryFacts() {
   // debounce by 100 ms
-  yield call(delay, 100)
+  yield delay(100)
   const session: Session = yield select(getSelectedSession)
-
   const { schema } = yield schemaFetcher.fetch(session)
   try {
     const ast = parse(session.query)
@@ -81,7 +80,7 @@ function* setQueryFacts() {
 
 function* reflectQueryToUrl({ payload }) {
   // debounce by 100 ms
-  yield call(delay, 100)
+  yield delay(100)
   if (!location.search.includes('query')) {
     return
   }
@@ -129,10 +128,14 @@ function* runQueryAtPosition(action) {
 function* getSessionWithCredentials() {
   const session = yield select(getSelectedSession)
   const settings = yield select(getSettings)
+  const combinedHeaders = {
+    ...settings['request.globalHeaders'],
+    ...parseHeaders(session.headers),
+  }
 
   return {
     endpoint: session.endpoint,
-    headers: session.headers,
+    headers: JSON.stringify(combinedHeaders),
     credentials: settings['request.credentials'],
   }
 }
@@ -150,7 +153,7 @@ function* fetchSchemaSaga() {
     )
   } catch (e) {
     yield put(schemaFetchingError(session.endpoint))
-    yield call(delay, 5000)
+    yield delay(5000)
     yield put(fetchSchema())
   }
 }
@@ -168,7 +171,7 @@ function* refetchSchemaSaga() {
     )
   } catch (e) {
     yield put(schemaFetchingError(session.endpoint))
-    yield call(delay, 5000)
+    yield delay(5000)
     yield put(refetchSchema())
   }
 }
@@ -184,8 +187,8 @@ function* renewStacks() {
   if (schema && (!lastSchema || lastSchema !== schema)) {
     const rootMap = getRootMap(schema)
     const stacks = docs.navStack
-      .map(stack => getNewStack(rootMap, schema, stack))
-      .filter(s => s)
+      .map((stack) => getNewStack(rootMap, schema, stack))
+      .filter((s) => s)
     yield put(setStacks(session.id, stacks))
     yield put(setTracingSupported(tracingSupported))
     lastSchema = schema
@@ -199,7 +202,7 @@ function* addToHistory({ payload }) {
 
   const history: HistoryState = workspace.get('history')
 
-  const exists = history.toKeyedSeq().find(item => is(item, session))
+  const exists = history.toKeyedSeq().find((item) => is(item, session))
   if (!exists) {
     yield put(addHistoryItem(session))
   }

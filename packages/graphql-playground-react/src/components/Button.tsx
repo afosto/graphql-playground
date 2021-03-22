@@ -26,8 +26,8 @@ export const ButtonBox = styled<ButtonProps, 'div'>('div')`
 
   padding: 6px 16px;
   border-radius: 2px;
-  background: ${p => (p.purple ? 'rgb(218, 27, 127)' : '#2a7ed2')};
-  color: ${p => p.theme.colours.white};
+  background: ${(p) => (p.purple ? 'rgb(218, 27, 127)' : '#2a7ed2')};
+  color: ${(p) => p.theme.colours.white};
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
   font-weight: 600;
@@ -38,8 +38,8 @@ export const ButtonBox = styled<ButtonProps, 'div'>('div')`
   transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
   cursor: pointer;
   &:hover {
-    background: ${p => (p.purple ? 'rgb(164, 3, 111)' : '#3f8ad7')};
-    transform: ${p =>
+    background: ${(p) => (p.purple ? 'rgb(164, 3, 111)' : '#3f8ad7')};
+    transform: ${(p) =>
       p.purple ? 'translate3D(0, 0, 0)' : 'translate3D(0, -1px, 0)'};
     svg {
       animation: move 1s ease infinite;
@@ -48,7 +48,7 @@ export const ButtonBox = styled<ButtonProps, 'div'>('div')`
 
   svg {
     margin-left: 10px;
-    fill: ${p => p.theme.colours.white};
+    fill: ${(p) => p.theme.colours.white};
   }
 
   @keyframes move {

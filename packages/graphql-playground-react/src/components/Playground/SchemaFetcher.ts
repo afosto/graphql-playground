@@ -1,4 +1,8 @@
-import { GraphQLSchema, introspectionQuery, buildClientSchema } from 'graphql'
+import {
+  GraphQLSchema,
+  getIntrospectionQuery,
+  buildClientSchema,
+} from 'graphql'
 import { NoSchemaError } from './util/NoSchemaError'
 import { ApolloLink, execute } from 'apollo-link'
 import { Map, set } from 'immutable'
@@ -15,6 +19,7 @@ export interface TracingSchemaTuple {
 export interface SchemaFetchProps {
   endpoint: string
   headers?: string
+  useTracingHeader?: boolean
 }
 
 export type LinkGetter = (session: LinkCreatorProps) => { link: ApolloLink }
@@ -105,20 +110,24 @@ export class SchemaFetcher {
   ): Promise<{ schema: GraphQLSchema; tracingSupported: boolean } | null> {
     const hash = this.hash(session)
     const { endpoint } = session
-    const headers = {
+    const headersTracing = {
       ...parseHeaders(session.headers),
       'X-Apollo-Tracing': '1',
     }
+    const headersNoTracing = {
+      ...parseHeaders(session.headers),
+    }
+    const headers = session.useTracingHeader ? headersTracing : headersNoTracing
 
     const options = set(session, 'headers', headers) as any
 
     const { link } = this.linkGetter(options)
 
-    const operation = makeOperation({ query: introspectionQuery })
+    const operation = makeOperation({ query: getIntrospectionQuery() })
 
     return new Promise((resolve, reject) => {
       execute(link, operation).subscribe({
-        next: schemaData => {
+        next: (schemaData) => {
           if (
             schemaData &&
             ((schemaData.errors && schemaData.errors.length > 0) ||
@@ -147,7 +156,7 @@ export class SchemaFetcher {
             subscription(result.schema)
           }
         },
-        error: err => {
+        error: (err) => {
           reject(err)
           this.fetching = this.fetching.remove(this.hash(session))
         },

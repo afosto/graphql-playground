@@ -51,11 +51,13 @@ export const defaultSettings: ISettings = {
   'prettier.tabWidth': 2,
   'prettier.useTabs': false,
   'request.credentials': 'omit',
+  'request.globalHeaders': {},
   'schema.disableComments': true,
   'schema.polling.enable': true,
   'schema.polling.endpointFilter': '*localhost*',
   'schema.polling.interval': 2000,
   'tracing.hideTracingResponse': true,
+  'tracing.tracingSupported': true,
 }
 
 // tslint:disable-next-line:max-classes-per-file
@@ -145,13 +147,11 @@ export const rootReducer = (state = new RootState(), action) => {
 function makeStateFromTabs(tabs: Tab[]): RootState {
   const endpoint = tabs[0].endpoint
   const tabSessions = OrderedMap(
-    tabs.map(sessionFromTab).reduce(
-      (acc, curr) => {
-        return { ...acc, [curr.id]: curr }
-      },
-      {} as OrderedMap<string, Session>,
-    ),
+    tabs.map(sessionFromTab).reduce((acc, curr) => {
+      return { ...acc, [curr.id]: curr }
+    }, {} as OrderedMap<string, Session>),
   )
+  // @ts-ignore
   const selectedSessionId = tabSessions.first()!.id
   const workspace = makeWorkspace(endpoint)
     .setIn(['sessions', 'sessions'], tabSessions)
@@ -177,11 +177,11 @@ export function makeWorkspace(endpoint) {
 
 export default rootReducer
 
-export const getSessionCounts = immutableMemoize(state => {
-  return state.workspaces.map(w => w.sessions.sessionCount)
+export const getSessionCounts = immutableMemoize((state) => {
+  return state.workspaces.map((w) => w.sessions.sessionCount)
 })
 
-export const getSettingsString = state => state.settingsString
+export const getSettingsString = (state) => state.settingsString
 export const getSettings = createSelector(
   [getSettingsString],
   parseSettingsString,
