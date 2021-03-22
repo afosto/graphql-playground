@@ -9,8 +9,8 @@ export interface DocTypeSchemaProps {
 }
 
 export default ({ type, fields, interfaces }: DocTypeSchemaProps) => {
-  const nonDeprecatedFields = fields.filter(data => !data.isDeprecated)
-  const deprecatedFields = fields.filter(data => data.isDeprecated)
+  const nonDeprecatedFields = fields.filter((data) => !data.isDeprecated)
+  const deprecatedFields = fields.filter((data) => data.isDeprecated)
   return (
     <DocTypeSchema>
       <DocTypeLine>
@@ -28,7 +28,7 @@ export default ({ type, fields, interfaces }: DocTypeSchemaProps) => {
           }
         />
       ))}
-      {nonDeprecatedFields.map(data => (
+      {nonDeprecatedFields.map((data) => (
         <SDLType key={data.name} type={data} collapsable={true} />
       ))}
       {deprecatedFields.length > 0 && <br />}
@@ -75,12 +75,12 @@ const DocsTypeInferface = styled(SDLType)`
 `
 
 const DocsValueComment = styled.span`
-  color: ${p => p.theme.colours.black50};
+  color: ${(p) => p.theme.colours.black50};
   padding-right: 16px;
   padding-left: 32px;
 `
 
 const Brace = styled.span`
   font-weight: 600;
-  color: ${p => p.theme.colours.darkBlue50};
+  color: ${(p) => p.theme.colours.darkBlue50};
 `

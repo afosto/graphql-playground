@@ -25,16 +25,10 @@ class Settings extends React.Component<Props, {}> {
   }
 }
 
-export default connect(
-  null,
-  { onClick: openSettingsTab },
-)(Settings)
+export default connect(null, { onClick: openSettingsTab })(Settings)
 
 const Wrapper = styled.div`
-  position: absolute;
-  z-index: 1005;
-  right: 20px;
-  top: 17px;
+  margin: 5px;
 `
 
 const IconWrapper = styled.div`
@@ -42,13 +36,13 @@ const IconWrapper = styled.div`
   cursor: pointer;
 
   svg {
-    fill: ${p => p.theme.editorColours.icon};
+    fill: ${(p) => p.theme.editorColours.icon};
     transition: 0.1s linear fill;
   }
 
   &:hover {
     svg {
-      fill: ${p => p.theme.editorColours.iconHover};
+      fill: ${(p) => p.theme.editorColours.iconHover};
     }
   }
 `

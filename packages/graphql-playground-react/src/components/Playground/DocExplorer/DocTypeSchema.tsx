@@ -12,8 +12,8 @@ export interface DocTypeSchemaProps {
 }
 
 export default ({ type, fields, interfaces, level }: DocTypeSchemaProps) => {
-  const nonDeprecatedFields = fields.filter(data => !data.isDeprecated)
-  const deprecatedFields = fields.filter(data => data.isDeprecated)
+  const nonDeprecatedFields = fields.filter((data) => !data.isDeprecated)
+  const deprecatedFields = fields.filter((data) => data.isDeprecated)
 
   const typeInstance =
     type instanceof GraphQLInterfaceType ? 'interface ' : 'type'
@@ -99,12 +99,12 @@ const DocsTypeInferface = styled(TypeLink)`
 `
 
 const DocsValueComment = styled.p`
-  color: ${p => p.theme.colours.black50};
+  color: ${(p) => p.theme.colours.black50};
   padding-right: 16px;
   padding-left: 32px;
 `
 
 const Brace = styled.span`
   font-weight: 600;
-  color: ${p => p.theme.colours.darkBlue50};
+  color: ${(p) => p.theme.colours.darkBlue50};
 `

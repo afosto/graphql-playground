@@ -39,4 +39,4 @@ export default handleActions(
   new AppHistory(),
 )
 
-export const getAppHistory = state => state.appHistory
+export const getAppHistory = (state) => state.appHistory

@@ -32,13 +32,15 @@ function deserializeWorkspaces(workspaces): Map<string, any> {
 
 function deserializeAppHistory(state) {
   return new AppHistory({
-    items: OrderedMap(mapValues(state.items, item => new AppHistoryItem(item))),
+    items: OrderedMap(
+      mapValues(state.items, (item) => new AppHistoryItem(item)),
+    ),
   })
 }
 
 function deserializeDocs(state): Map<string, any> {
   return Map(
-    mapValues(state, docsSession => {
+    mapValues(state, (docsSession) => {
       return new DocsSession({
         docsOpen: docsSession.docsOpen,
         keyMove: docsSession.keyMove,
@@ -51,7 +53,7 @@ function deserializeDocs(state): Map<string, any> {
 
 function deserializeNavstack(navStack) {
   // note that stacks are plain objects. could be refactored to Map later
-  return List(navStack.map(s => Map(s))) as any
+  return List(navStack.map((s) => Map(s))) as any
 }
 
 function deserializeSessionsState(state) {
@@ -71,7 +73,7 @@ function deserializeSessionsState(state) {
 }
 
 function deserializeSessions(state) {
-  return OrderedMap(mapValues(state, session => deserializeSession(session)))
+  return OrderedMap(mapValues(state, (session) => deserializeSession(session)))
 }
 
 function deserializeSession(session) {
@@ -96,8 +98,8 @@ function deserializeSession(session) {
 function deserializeResponses(responses) {
   return List(
     responses
-      .filter(r => r.isSchemaError)
-      .map(response => deserializeResponse(response)),
+      .filter((r) => r.isSchemaError)
+      .map((response) => deserializeResponse(response)),
   )
 }
 

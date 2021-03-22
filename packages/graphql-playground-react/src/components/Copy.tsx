@@ -59,7 +59,7 @@ const Indicator = styled.div`
   left: 50%;
   transform: translate(-50%, 0);
   animation: copying 700ms linear;
-  color: ${p => (p.color ? p.color : p.theme.colours.darkBlue30)};
+  color: ${(p) => (p.color ? p.color : p.theme.colours.darkBlue30)};
 
   @keyframes copying {
     0% {

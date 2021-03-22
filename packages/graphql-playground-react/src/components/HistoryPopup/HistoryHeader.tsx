@@ -29,5 +29,5 @@ const HistoryHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  background: ${p => p.theme.colours.black02};
+  background: ${(p) => p.theme.colours.black02};
 `

@@ -127,7 +127,7 @@ export class SchemaFetcher {
 
     return new Promise((resolve, reject) => {
       execute(link, operation).subscribe({
-        next: schemaData => {
+        next: (schemaData) => {
           if (
             schemaData &&
             ((schemaData.errors && schemaData.errors.length > 0) ||
@@ -156,7 +156,7 @@ export class SchemaFetcher {
             subscription(result.schema)
           }
         },
-        error: err => {
+        error: (err) => {
           reject(err)
           this.fetching = this.fetching.remove(this.hash(session))
         },

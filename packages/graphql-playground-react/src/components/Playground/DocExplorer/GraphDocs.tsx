@@ -65,7 +65,9 @@ class GraphDocs extends React.Component<
     ;(window as any).d = this
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: SideTabContentProps & StateFromProps) {
+  UNSAFE_componentWillReceiveProps(
+    nextProps: SideTabContentProps & StateFromProps,
+  ) {
     // If user use default column size % columnWidth
     // Make the column follow the clicks
     if (
@@ -85,7 +87,7 @@ class GraphDocs extends React.Component<
   getWidth(props: any = this.props) {
     const rootWidth = this.state.widthMap.root || columnWidth
     const stackWidths = props.docs.navStack.map(
-      stack => this.state.widthMap[stack.field.path] || columnWidth,
+      (stack) => this.state.widthMap[stack.field.path] || columnWidth,
     )
 
     return [rootWidth].concat(stackWidths).reduce((acc, curr) => acc + curr, 0)
@@ -115,16 +117,15 @@ class GraphDocs extends React.Component<
         ref={this.setRef}
       >
         {emptySchema && <ColumnDoc>{emptySchema}</ColumnDoc>}
-        {!emptySchema &&
-          schema && (
-            <RootColumn
-              schema={schema}
-              width={this.state.widthMap.root || columnWidth - 1}
-              searchValue={this.state.searchValue}
-              handleSearch={this.handleSearch}
-              sessionId={this.props.sessionId}
-            />
-          )}
+        {!emptySchema && schema && (
+          <RootColumn
+            schema={schema}
+            width={this.state.widthMap.root || columnWidth - 1}
+            searchValue={this.state.searchValue}
+            handleSearch={this.handleSearch}
+            sessionId={this.props.sessionId}
+          />
+        )}
         {navStack.map((stack, index) => (
           <ColumnDoc
             key={index}
@@ -142,11 +143,11 @@ class GraphDocs extends React.Component<
     )
   }
 
-  setRef = ref => {
+  setRef = (ref) => {
     this.ref = ref
   }
 
-  public showDocFromType = type => {
+  public showDocFromType = (type) => {
     this.props.addStack(this.props.sessionId, type, 0, 0)
   }
 
@@ -154,7 +155,7 @@ class GraphDocs extends React.Component<
     this.setState({ searchValue: value })
   }
 
-  private handleKeyDown = e => {
+  private handleKeyDown = (e) => {
     // we don't want to interfere with inputs
     if (
       e.target instanceof HTMLInputElement ||
@@ -245,7 +246,7 @@ class GraphDocs extends React.Component<
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       addStack,

@@ -17,8 +17,8 @@ export class GeneralState extends Record({
 
 export default handleActions(
   {
-    OPEN_HISTORY: state => state.set('historyOpen', true),
-    CLOSE_HISTORY: state => state.set('historyOpen', false),
+    OPEN_HISTORY: (state) => state.set('historyOpen', true),
+    CLOSE_HISTORY: (state) => state.set('historyOpen', false),
     SET_ENDPOINT_DISABLED: (state, { payload: { value } }) =>
       state.set('endpointDisabled', value),
     SET_CONFIG_STRING: (state, { payload: { configString } }) =>

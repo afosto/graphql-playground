@@ -1,4 +1,4 @@
-const makeGeneralSelector = key => state => {
+const makeGeneralSelector = (key) => (state) => {
   return state.general.get(key)
 }
 

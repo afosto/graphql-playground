@@ -61,7 +61,7 @@ class ExecuteButton extends React.Component<ReduxProps, State> {
       options = (
         <ExecuteBox>
           <ExecuteOptions>
-            {operations.map(operation => (
+            {operations.map((operation) => (
               <ExecuteButtonOperation
                 operation={operation}
                 onMouseOver={this.handleMouseOver}
@@ -137,7 +137,7 @@ class ExecuteButton extends React.Component<ReduxProps, State> {
     }
   }
 
-  private onOptionSelected = operation => {
+  private onOptionSelected = (operation) => {
     this.setState({ optionsOpen: false } as State)
     if (!operation) {
       return
@@ -145,12 +145,12 @@ class ExecuteButton extends React.Component<ReduxProps, State> {
     this.props.runQuery(operation.name && operation.name.value)
   }
 
-  private onOptionsOpen = downEvent => {
+  private onOptionsOpen = (downEvent) => {
     let initialPress = true
     const downTarget = downEvent.target
     this.setState({ highlight: null, optionsOpen: true })
 
-    let onMouseUp: any = upEvent => {
+    let onMouseUp: any = (upEvent) => {
       if (initialPress && upEvent.target === downTarget) {
         initialPress = false
       } else {
@@ -168,7 +168,7 @@ class ExecuteButton extends React.Component<ReduxProps, State> {
           if (firstTime) {
             this.onOptionSelected(
               this.props.operations.find(
-                op => op.name.value === upEvent.target.textContent,
+                (op) => op.name.value === upEvent.target.textContent,
               ) || this.props.operations[0],
             )
             firstTime = false
@@ -187,10 +187,9 @@ const mapStateToProps = createStructuredSelector({
   sessionId: getSelectedSessionIdFromRoot,
 })
 
-export default connect(
-  mapStateToProps,
-  { runQuery, stopQuery },
-)(toJS(ExecuteButton))
+export default connect(mapStateToProps, { runQuery, stopQuery })(
+  toJS(ExecuteButton),
+)
 
 const Wrapper = styled.div`
   position: absolute;
@@ -214,20 +213,20 @@ const Button = styled<ButtonProps, 'div'>('div')`
 
   border-radius: 100%;
   transition: background-color 100ms;
-  background-color: ${p =>
+  background-color: ${(p) =>
     p.isRunning
       ? p.theme.editorColours.executeButtonSubscription
       : p.theme.editorColours.executeButton};
-  border: 6px solid ${p => p.theme.editorColours.executeButtonBorder};
+  border: 6px solid ${(p) => p.theme.editorColours.executeButtonBorder};
   cursor: pointer;
   user-select: none;
 
   svg {
-    fill: ${p => (p.theme.mode === 'light' ? 'white' : 'inherit')};
+    fill: ${(p) => (p.theme.mode === 'light' ? 'white' : 'inherit')};
   }
 
   &:hover {
-    background-color: ${p =>
+    background-color: ${(p) =>
       p.isRunning
         ? p.theme.editorColours.executeButtonSubscriptionHover
         : p.theme.editorColours.executeButtonHover};

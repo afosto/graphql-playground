@@ -187,8 +187,8 @@ function* renewStacks() {
   if (schema && (!lastSchema || lastSchema !== schema)) {
     const rootMap = getRootMap(schema)
     const stacks = docs.navStack
-      .map(stack => getNewStack(rootMap, schema, stack))
-      .filter(s => s)
+      .map((stack) => getNewStack(rootMap, schema, stack))
+      .filter((s) => s)
     yield put(setStacks(session.id, stacks))
     yield put(setTracingSupported(tracingSupported))
     lastSchema = schema
@@ -202,7 +202,7 @@ function* addToHistory({ payload }) {
 
   const history: HistoryState = workspace.get('history')
 
-  const exists = history.toKeyedSeq().find(item => is(item, session))
+  const exists = history.toKeyedSeq().find((item) => is(item, session))
   if (!exists) {
     yield put(addHistoryItem(session))
   }

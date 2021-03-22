@@ -34,7 +34,7 @@ class Tooltip extends React.PureComponent<Props, {}> {
     )
   }
 
-  handleClickOutside = event => {
+  handleClickOutside = (event) => {
     if (!this.props.open) {
       return
     }
@@ -124,8 +124,8 @@ const Wrapper = styled.div`
         ${BigTriangle} {
           top: -10px;
           border-width: 0 10px 10px 10px;
-          border-color: ${k => k.theme.colours.paleGrey} transparent
-            ${k => k.theme.colours.paleGrey} transparent;
+          border-color: ${(k) => k.theme.colours.paleGrey} transparent
+            ${(k) => k.theme.colours.paleGrey} transparent;
         }
       `
     : ''} ${(p: WrapperProps) =>
@@ -164,13 +164,13 @@ const Content = styled.div`
   display: flex;
   align-items: center;
 
-  padding: ${p => p.theme.sizes.small12} ${p => p.theme.sizes.small16};
+  padding: ${(p) => p.theme.sizes.small12} ${(p) => p.theme.sizes.small16};
   white-space: nowrap;
 
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
-  background-color: ${p => p.theme.colours.paleGrey};
-  border-radius: ${p => p.theme.sizes.smallRadius};
-  color: ${p => p.theme.colours.paleText};
+  background-color: ${(p) => p.theme.colours.paleGrey};
+  border-radius: ${(p) => p.theme.sizes.smallRadius};
+  color: ${(p) => p.theme.colours.paleText};
 `
 
 const BigTriangle = styled.div`
@@ -180,6 +180,6 @@ const BigTriangle = styled.div`
 
   border-style: solid;
   border-width: 10px 10px 0 10px;
-  border-color: ${p => p.theme.colours.paleGrey} transparent transparent
+  border-color: ${(p) => p.theme.colours.paleGrey} transparent transparent
     transparent;
 `

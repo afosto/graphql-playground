@@ -5,8 +5,9 @@ import { ISettings } from '../types'
 import HistoryPopup from './HistoryPopup'
 import { styled } from '../styled'
 import Settings from './Settings'
+import UserManager from './UserManager'
 import { PlaygroundSettingsEditor, GraphQLConfigEditor } from './SettingsEditor'
-import { GraphQLConfig } from '../graphqlConfig'
+import { GraphQLConfig, GraphQLOAuthConfig } from '../graphqlConfig'
 import FileEditor from './FileEditor'
 import { ApolloLink } from 'apollo-link'
 
@@ -92,6 +93,7 @@ export interface Props {
   ) => ApolloLink
   workspaceName?: string
   schema?: GraphQLSchema
+  oauth?: GraphQLOAuthConfig
 }
 
 export interface ReduxProps {
@@ -276,7 +278,7 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
           props.settings['tracing.tracingSupported'],
       }
       const schema = await schemaFetcher.fetch(data)
-      schemaFetcher.subscribe(data, newSchema => {
+      schemaFetcher.subscribe(data, (newSchema) => {
         if (
           data.endpoint === this.props.endpoint ||
           data.endpoint === this.props.sessionEndpoint
@@ -333,7 +335,12 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
             )}
           </GraphiqlWrapper>
         </GraphiqlsContainer>
-        <Settings />
+        <ToolbarWrapper>
+          <Settings />
+          {this.props.oauth && (
+            <UserManager {...this.props.oauth} endpoint={this.props.endpoint} />
+          )}
+        </ToolbarWrapper>
         {this.props.historyOpen && this.renderHistoryPopup()}
       </PlaygroundContainer>
     )
@@ -419,24 +426,21 @@ const mapStateToProps = createStructuredSelector({
   sessionEndpoint: getEndpoint,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    selectTabIndex,
-    selectNextTab,
-    selectPrevTab,
-    newSession,
-    closeSelectedTab,
-    initState,
-    saveSettings,
-    saveConfig,
-    setTracingSupported,
-    injectHeaders,
-    setConfigString,
-    schemaFetchingError,
-    schemaFetchingSuccess,
-  },
-)(Playground)
+export default connect(mapStateToProps, {
+  selectTabIndex,
+  selectNextTab,
+  selectPrevTab,
+  newSession,
+  closeSelectedTab,
+  initState,
+  saveSettings,
+  saveConfig,
+  setTracingSupported,
+  injectHeaders,
+  setConfigString,
+  schemaFetchingError,
+  schemaFetchingSuccess,
+})(Playground)
 
 const PlaygroundContainer = styled.div`
   flex: 1;
@@ -479,4 +483,13 @@ const GraphiqlWrapper = styled.div`
   &.active {
     visibility: visible;
   }
+`
+
+const ToolbarWrapper = styled.div`
+  display: flex;
+
+  position: absolute;
+  z-index: 1005;
+  right: 20px;
+  top: 17px;
 `

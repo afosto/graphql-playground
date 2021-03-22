@@ -47,7 +47,7 @@ export default handleActions(
         field.path = field.name
       }
       let session = getSession(state, sessionId)
-      session = session.update('navStack', navStack => {
+      session = session.update('navStack', (navStack) => {
         let newNavStack = navStack
         if (x < newNavStack.count()) {
           newNavStack = newNavStack.slice(0, x)

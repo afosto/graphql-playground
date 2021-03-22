@@ -66,7 +66,7 @@ export const {
   reorderTabs,
 } = createActions({
   // simple property setting
-  EDIT_QUERY: query => ({ query }),
+  EDIT_QUERY: (query) => ({ query }),
   EDIT_HEADERS: simpleAction('headers'),
   EDIT_ENDPOINT: simpleAction('endpoint'),
   EDIT_VARIABLES: simpleAction('variables'),
@@ -158,10 +158,10 @@ export const {
   GraphQLEditor.renewStacks()
   */
 
-  RUN_QUERY: operationName => ({ operationName }),
+  RUN_QUERY: (operationName) => ({ operationName }),
   QUERY_SUCCESS: simpleAction(),
   QUERY_ERROR: simpleAction(),
-  RUN_QUERY_AT_POSITION: position => ({ position }),
+  RUN_QUERY_AT_POSITION: (position) => ({ position }),
   START_QUERY: simpleAction('queryRunning', true),
   STOP_QUERY: (sessionId, workspaceId) => ({ workspaceId, sessionId }),
   /* GraphQLEditor.handleRunQuery */
@@ -193,5 +193,5 @@ export const {
 })
 
 function simpleAction(key?: any, defaultValue?: any) {
-  return value => ({ [key]: value || defaultValue })
+  return (value) => ({ [key]: value || defaultValue })
 }

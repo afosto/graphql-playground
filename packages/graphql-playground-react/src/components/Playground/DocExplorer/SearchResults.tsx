@@ -33,7 +33,7 @@ export default class SearchResults extends React.Component<Props, {}> {
 
     // Move the within type name to be the first searched.
     if (withinType) {
-      typeNames = typeNames.filter(n => n !== withinType.name)
+      typeNames = typeNames.filter((n) => n !== withinType.name)
       typeNames.unshift(withinType.name)
     }
 
@@ -57,14 +57,14 @@ export default class SearchResults extends React.Component<Props, {}> {
 
       if (type.getFields) {
         const fields = type.getFields()
-        Object.keys(fields).forEach(fieldName => {
+        Object.keys(fields).forEach((fieldName) => {
           const field = fields[fieldName]
           field.parent = type
           let matchingArgs
 
           if (!isMatch(fieldName, searchValue)) {
             if (field.args && field.args.length) {
-              matchingArgs = field.args.filter(arg =>
+              matchingArgs = field.args.filter((arg) =>
                 isMatch(arg.name, searchValue),
               )
               if (matchingArgs.length === 0) {
@@ -129,7 +129,7 @@ export default class SearchResults extends React.Component<Props, {}> {
 
 function isMatch(sourceText, searchValue) {
   try {
-    const escaped = searchValue.replace(/[^_0-9A-Za-z]/g, ch => '\\' + ch)
+    const escaped = searchValue.replace(/[^_0-9A-Za-z]/g, (ch) => '\\' + ch)
     return sourceText.search(new RegExp(escaped, 'i')) !== -1
   } catch (e) {
     return sourceText.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1

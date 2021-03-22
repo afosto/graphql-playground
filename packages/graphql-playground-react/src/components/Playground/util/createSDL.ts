@@ -34,12 +34,12 @@ const defaultTypes = [
 (A component that is similar to the DocsExplorer) to consume */
 export function sdlArray(schema: GraphQLSchema, options?: Options) {
   const objectValues =
-    Object.values || (obj => Object.keys(obj).map(key => obj[key]))
+    Object.values || ((obj) => Object.keys(obj).map((key) => obj[key]))
   const typeMap = schema.getTypeMap()
   const types = objectValues(typeMap)
     .sort((type1, type2) => type1.name.localeCompare(type2.name))
-    .filter(type => !defaultTypes.includes(type.name))
-    .map(type => ({
+    .filter((type) => !defaultTypes.includes(type.name))
+    .map((type) => ({
       ...type,
       ...serialize(schema, type),
       instanceOf: getTypeInstance(type),
@@ -60,7 +60,6 @@ function getTypeInstance(type) {
     return 'type'
   }
 }
-
 
 // Returns a prettified schema
 export function getSDL(

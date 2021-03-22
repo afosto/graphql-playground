@@ -5,13 +5,13 @@ export interface State {
   component?: any
 }
 
-const asyncComponent = importComponent => {
+const asyncComponent = (importComponent) => {
   return class extends React.Component<any, State> {
     state: State = {
       component: null,
     }
     componentDidMount() {
-      importComponent().then(cmp => {
+      importComponent().then((cmp) => {
         this.setState({ component: cmp.default })
       })
     }

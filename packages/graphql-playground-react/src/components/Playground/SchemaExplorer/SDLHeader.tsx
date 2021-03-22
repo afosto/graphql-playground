@@ -30,7 +30,7 @@ export default class SDLHeader extends React.Component<SDLHeaderProps, State> {
     document.removeEventListener('mousedown', this.handleClick, false)
   }
 
-  handleClick = e => {
+  handleClick = (e) => {
     if (this.node.contains(e.target)) {
       return
     }
@@ -53,7 +53,7 @@ export default class SDLHeader extends React.Component<SDLHeaderProps, State> {
     return downloadSchema(this.props.schema, 'json')
   }
 
-  setRef = ref => {
+  setRef = (ref) => {
     this.node = ref
   }
 
@@ -101,7 +101,7 @@ const Box = styled.div`
 `
 
 const Title = styled.div`
-  color: ${p => styleHelper(p).title};
+  color: ${(p) => styleHelper(p).title};
   cursor: default;
   font-size: 14px;
   font-weight: 600;
@@ -115,13 +115,13 @@ const Title = styled.div`
 
 const Download = styled(Button)`
   flex: 1;
-  color: ${p => styleHelper(p).download['text']};
-  background: ${p => styleHelper(p).download['button']};
+  color: ${(p) => styleHelper(p).download['text']};
+  background: ${(p) => styleHelper(p).download['button']};
   height: 32px;
   border-radius: 2px;
   &:hover {
-    color: ${p => styleHelper(p).buttonTextHover};
-    background-color: ${p => styleHelper(p).buttonHover};
+    color: ${(p) => styleHelper(p).buttonTextHover};
+    background-color: ${(p) => styleHelper(p).buttonHover};
   }
 `
 
@@ -131,10 +131,10 @@ const Option = styled(Download)`
   margin-left: 0px;
   border-radius: 0px;
   z-index: 2000;
-  background: ${p => styleHelper(p).button};
+  background: ${(p) => styleHelper(p).button};
 `
 
-const styleHelper = p => {
+const styleHelper = (p) => {
   if (p.theme.mode === 'dark') {
     return {
       title: 'white',

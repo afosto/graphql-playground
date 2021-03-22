@@ -35,13 +35,10 @@ const mapStateToProps = createStructuredSelector({
   value: getFile,
 })
 
-export default connect(
-  mapStateToProps,
-  { onChange: editFile },
-)(FileEditor)
+export default connect(mapStateToProps, { onChange: editFile })(FileEditor)
 
 const Wrapper = styled.div`
-  background: ${p => p.theme.editorColours.resultBackground};
+  background: ${(p) => p.theme.editorColours.resultBackground};
   position: relative;
   .variable-editor {
     height: 100% !important;

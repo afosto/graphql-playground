@@ -87,7 +87,7 @@ export default function onHasCompletion(cm, data, onHintInformationRender) {
       let onRemoveFn
       wrapper.addEventListener(
         'DOMNodeRemoved',
-        (onRemoveFn = event => {
+        (onRemoveFn = (event) => {
           if (event.target === hintsUl) {
             wrapper.removeEventListener('DOMNodeRemoved', onRemoveFn)
             wrapper.parentNode.removeChild(wrapper)

@@ -19,7 +19,7 @@ export function getQueryFacts(schema, documentAST: DocumentNode): any {
 
   // Collect operations by their names.
   const operations: any[] = []
-  documentAST.definitions.forEach(def => {
+  documentAST.definitions.forEach((def) => {
     if (def.kind === 'OperationDefinition') {
       operations.push(def)
     }
@@ -33,7 +33,7 @@ export function getQueryFacts(schema, documentAST: DocumentNode): any {
  */
 export function collectVariables(schema, documentAST) {
   const variableToType = Object.create(null)
-  documentAST.definitions.forEach(definition => {
+  documentAST.definitions.forEach((definition) => {
     if (definition.kind === 'OperationDefinition') {
       const variableDefinitions = definition.variableDefinitions
       if (variableDefinitions) {

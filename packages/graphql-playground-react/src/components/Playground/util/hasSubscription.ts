@@ -17,7 +17,7 @@ function getSelectedOperation(
   }
 
   return operation.query.definitions.find(
-    d =>
+    (d) =>
       d.kind === 'OperationDefinition' &&
       !!d.name &&
       d.name.value === operation.operationName,

@@ -44,7 +44,7 @@ class HistoryPopup extends React.Component<ReduxProps, State> {
   }
   render() {
     const { searchTerm, selectedFilter } = this.state
-    const items = this.props.items.filter(item => {
+    const items = this.props.items.filter((item) => {
       return selectedFilter === 'STARRED'
         ? item.starred
         : true &&
@@ -138,15 +138,12 @@ const mapStateToProps = createStructuredSelector({
   isOpen: getHistoryOpen,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    closeHistory,
-    openHistory,
-    duplicateSession,
-    toggleHistoryItemStarring,
-  },
-)(HistoryPopup)
+export default connect(mapStateToProps, {
+  closeHistory,
+  openHistory,
+  duplicateSession,
+  toggleHistoryItemStarring,
+})(HistoryPopup)
 
 const Wrapper = styled.div`
   display: flex;
@@ -169,12 +166,12 @@ const RightHeader = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  padding-left: ${p => p.theme.sizes.medium25};
-  padding-right: ${p => p.theme.sizes.medium25};
+  padding-left: ${(p) => p.theme.sizes.medium25};
+  padding-right: ${(p) => p.theme.sizes.medium25};
   padding-top: 20px;
   padding-bottom: 20px;
 
-  background: ${p => p.theme.editorColours.resultBackground};
+  background: ${(p) => p.theme.editorColours.resultBackground};
 `
 
 const RightEmpty = styled.div`
@@ -183,17 +180,17 @@ const RightEmpty = styled.div`
   justify-content: center;
   align-items: center;
 
-  background: ${p => p.theme.editorColours.resultBackground};
+  background: ${(p) => p.theme.editorColours.resultBackground};
 `
 
 const RightEmptyText = styled.div`
   font-size: 16px;
-  color: ${p => p.theme.editorColours.text};
+  color: ${(p) => p.theme.editorColours.text};
 `
 
 const View = styled.div`
-  font-size: ${p => p.theme.sizes.fontSmall};
-  font-weight: ${p => p.theme.sizes.fontSemiBold};
+  font-size: ${(p) => p.theme.sizes.fontSmall};
+  font-weight: ${(p) => p.theme.sizes.fontSemiBold};
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.4);
 `
@@ -202,21 +199,21 @@ const Use = styled.div`
   display: flex;
   align-items: center;
 
-  padding-top: ${p => p.theme.sizes.small10};
-  padding-bottom: ${p => p.theme.sizes.small10};
-  padding-left: ${p => p.theme.sizes.small16};
-  padding-right: ${p => p.theme.sizes.small16};
+  padding-top: ${(p) => p.theme.sizes.small10};
+  padding-bottom: ${(p) => p.theme.sizes.small10};
+  padding-left: ${(p) => p.theme.sizes.small16};
+  padding-right: ${(p) => p.theme.sizes.small16};
 
-  font-size: ${p => p.theme.sizes.fontSmall};
-  font-weight: ${p => p.theme.sizes.fontSemiBold};
+  font-size: ${(p) => p.theme.sizes.fontSmall};
+  font-weight: ${(p) => p.theme.sizes.fontSemiBold};
 
-  border-radius: ${p => p.theme.sizes.smallRadius};
-  background: ${p => p.theme.colours.green};
+  border-radius: ${(p) => p.theme.sizes.smallRadius};
+  background: ${(p) => p.theme.colours.green};
   cursor: pointer;
 `
 
 const UseText = styled.div`
-  margin-right: ${p => p.theme.sizes.small6};
+  margin-right: ${(p) => p.theme.sizes.small6};
   color: white;
 `
 

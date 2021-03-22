@@ -7,6 +7,7 @@ import { styled, ThemeProvider, theme as styledTheme } from '../styled'
 import { Store } from 'redux'
 import PlaygroundWrapper from './PlaygroundWrapper'
 import { injectState } from '../state/workspace/actions'
+import { GraphQLOAuthConfig } from '../graphqlConfig'
 
 export const store: Store<any> = createStore()
 
@@ -27,6 +28,7 @@ export interface Props {
   history?: any
   match?: any
   headers?: any
+  oauth?: GraphQLOAuthConfig
 }
 
 export interface State {
@@ -91,8 +93,8 @@ class GraphQLBinApp extends React.Component<Props & ReduxProps, State> {
           variables: { id: this.props.match.params.id },
         }),
       })
-        .then(res => res.json())
-        .then(res => {
+        .then((res) => res.json())
+        .then((res) => {
           if (loadingWrapper) {
             loadingWrapper.classList.add('fadeOut')
           }
@@ -123,7 +125,7 @@ class GraphQLBinApp extends React.Component<Props & ReduxProps, State> {
     return (
       <Wrapper>
         {this.state.loading ? null : !this.state.endpoint ||
-        this.state.endpoint.length === 0 ? (
+          this.state.endpoint.length === 0 ? (
           <ThemeProvider theme={styledTheme}>
             <EndpointPopup
               onRequestClose={this.handleChangeEndpoint}
@@ -135,22 +137,20 @@ class GraphQLBinApp extends React.Component<Props & ReduxProps, State> {
             endpoint={endpoint}
             headers={this.state.headers}
             subscriptionEndpoint={subscriptionEndpoint}
+            oauth={this.props.oauth}
           />
         )}
       </Wrapper>
     )
   }
 
-  private handleChangeEndpoint = endpoint => {
+  private handleChangeEndpoint = (endpoint) => {
     this.setState({ endpoint })
     localStorage.setItem('last-endpoint', endpoint)
   }
 }
 
-const ConnectedGraphQLBinApp = connect(
-  null,
-  { injectState },
-)(GraphQLBinApp)
+const ConnectedGraphQLBinApp = connect(null, { injectState })(GraphQLBinApp)
 
 // tslint:disable
 export default class GraphQLBinAppHOC extends React.Component<Props> {

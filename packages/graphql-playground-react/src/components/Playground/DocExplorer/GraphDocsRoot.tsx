@@ -50,8 +50,8 @@ interface ShowRootTypeProps {
 }
 
 function ShowRootType({ name, fields, offset }: ShowRootTypeProps) {
-  const nonDeprecatedFields = fields.filter(data => !data.isDeprecated)
-  const deprecatedFields = fields.filter(data => data.isDeprecated)
+  const nonDeprecatedFields = fields.filter((data) => !data.isDeprecated)
+  const deprecatedFields = fields.filter((data) => data.isDeprecated)
 
   return (
     <div>
@@ -94,7 +94,7 @@ const DocsRoot = styled.div`
 `
 
 const DocsValueComment = styled.p`
-  color: ${p => p.theme.colours.black50};
+  color: ${(p) => p.theme.colours.black50};
   padding-right: 16px;
   padding-left: 16px;
 `

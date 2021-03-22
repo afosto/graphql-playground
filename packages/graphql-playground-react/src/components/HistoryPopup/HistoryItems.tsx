@@ -56,17 +56,16 @@ export default withTheme(
               {item.date && (
                 <Time>
                   {typeof item.date.getMonth === 'function' &&
-                    item.date.getMonth() + 1}/{item.date.getDate()}/{item.date
-                    .getFullYear()
-                    .toString()
-                    .slice(2, 4)}
+                    item.date.getMonth() + 1}
+                  /{item.date.getDate()}/
+                  {item.date.getFullYear().toString().slice(2, 4)}
                 </Time>
               )}
             </OperationSide>
           </HistoryItem>
         ))
         .toArray()
-        .map(x => x[1])}
+        .map((x) => x[1])}
     </HistoryItems>
   ),
 )
@@ -87,8 +86,8 @@ const HistoryItem = styled<ItemProps, 'div'>('div')`
   padding: 25px 20px;
   cursor: pointer;
   border-bottom: 1px solid;
-  border-color: ${p => p.theme.colours.black10};
-  background: ${p =>
+  border-color: ${(p) => p.theme.colours.black10};
+  background: ${(p) =>
     p.active ? p.theme.colours.black04 : p.theme.colours.white};
 `
 
@@ -119,23 +118,23 @@ const OperationIcon = styled.div`
   border-radius: 2px;
   font-weight: 700;
   font-size: 12px;
-  color: ${p => p.theme.colours.white};
+  color: ${(p) => p.theme.colours.white};
 `
 
 const QueryIcon = styled(OperationIcon)`
-  background: ${p => p.theme.colours.blue};
+  background: ${(p) => p.theme.colours.blue};
 `
 
 const MutationIcon = styled(OperationIcon)`
-  background: ${p => p.theme.colours.orange};
+  background: ${(p) => p.theme.colours.orange};
 `
 
 const SubscriptionIcon = styled(OperationIcon)`
-  background: ${p => p.theme.colours.purple};
+  background: ${(p) => p.theme.colours.purple};
 `
 
 const Time = styled.time`
-  color: ${p => p.theme.colours.black40};
+  color: ${(p) => p.theme.colours.black40};
   font-size: 14px;
   margin-left: 16px;
 `

@@ -137,7 +137,7 @@ class Share extends React.Component<SharingProps, State> {
   }
 
   private toggleTooltip = () => {
-    this.setState(state => ({ open: !state.open }))
+    this.setState((state) => ({ open: !state.open }))
   }
 }
 
@@ -149,15 +149,12 @@ const mapStateToProps = createStructuredSelector({
 })
 
 export default withTheme(
-  connect(
-    mapStateToProps,
-    {
-      toggleShareAllTabs,
-      toggleShareHeaders,
-      toggleShareHistory,
-      share,
-    },
-  )(Share),
+  connect(mapStateToProps, {
+    toggleShareAllTabs,
+    toggleShareHeaders,
+    toggleShareHistory,
+    share,
+  })(Share),
 )
 
 const AuthSharingWarning = () => (
@@ -211,12 +208,12 @@ const Wrapper = styled.div`
 const TooltipText = styled.div`
   margin-right: 10px;
 
-  font-size: ${p => p.theme.sizes.fontSmall};
-  font-weight: ${p => p.theme.sizes.fontSemiBold};
+  font-size: ${(p) => p.theme.sizes.fontSmall};
+  font-weight: ${(p) => p.theme.sizes.fontSemiBold};
   text-transform: uppercase;
   letter-spacing: 0.53px;
 
-  color: ${p => p.theme.colours.darkBlue50};
+  color: ${(p) => p.theme.colours.darkBlue50};
 `
 
 const IconWrapper = styled.div`
@@ -232,7 +229,7 @@ const TooltipWrapper = styled.div`
 const Row = styled.div`
   position: relative;
   min-width: 245px;
-  margin-top: ${p => p.theme.sizes.small16};
+  margin-top: ${(p) => p.theme.sizes.small16};
 
   display: flex;
   align-items: center;
@@ -249,7 +246,7 @@ const CopyWrapper = styled.div`
 
   &:hover {
     svg {
-      fill: ${p => p.theme.colours.darkBlue60};
+      fill: ${(p) => p.theme.colours.darkBlue60};
     }
   }
 `
@@ -257,13 +254,13 @@ const CopyWrapper = styled.div`
 const Input = styled.input`
   display: block;
   width: 100%;
-  padding: ${p => p.theme.sizes.small6} ${p => p.theme.sizes.small10};
+  padding: ${(p) => p.theme.sizes.small6} ${(p) => p.theme.sizes.small10};
   padding-right: 25px;
 
-  font-weight: ${p => p.theme.sizes.fontSemiBold};
-  font-size: ${p => p.theme.sizes.fontTiny};
+  font-weight: ${(p) => p.theme.sizes.fontSemiBold};
+  font-size: ${(p) => p.theme.sizes.fontTiny};
 
-  border-radius: ${p => p.theme.sizes.smallRadius};
-  background: ${p => p.theme.colours.darkBlue10};
-  color: ${p => p.theme.colours.darkBlue};
+  border-radius: ${(p) => p.theme.sizes.smallRadius};
+  background: ${(p) => p.theme.colours.darkBlue10};
+  color: ${(p) => p.theme.colours.darkBlue};
 `

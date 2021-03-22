@@ -54,7 +54,7 @@ export default class SearchBox extends React.Component<Props, State> {
     return <SearchContainer>{LabelComponent}</SearchContainer>
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ value: event.target.value })
     this.debouncedOnSearch()
   }
@@ -67,8 +67,8 @@ const SearchContainer = styled.div`
   display: flex;
   margin-left: 6px;
   padding: 25px;
-  background: ${p => p.theme.colours.black02};
-  border-bottom: 1px solid ${p => p.theme.colours.black10};
+  background: ${(p) => p.theme.colours.black02};
+  border-bottom: 1px solid ${(p) => p.theme.colours.black10};
   div {
     width: 100%;
   }
@@ -80,13 +80,13 @@ const Label = styled.div`
   align-items: center;
   padding: 12px 14px 13px 15px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  background: ${p => p.theme.colours.white};
+  background: ${(p) => p.theme.colours.white};
 `
 
 const Input = styled.input`
   font-size: 16px;
   margin-left: 10px;
   &::placeholder {
-    color: ${p => p.theme.colours.black30};
+    color: ${(p) => p.theme.colours.black30};
   }
 `

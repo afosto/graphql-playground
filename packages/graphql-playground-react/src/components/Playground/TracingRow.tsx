@@ -7,7 +7,7 @@ const Row = styled.div`
   display: table;
   padding-right: 25px;
 
-  color: ${p => p.theme.editorColours.text};
+  color: ${(p) => p.theme.editorColours.text};
 `
 
 const Bar = styled.span`
@@ -17,12 +17,12 @@ const Bar = styled.span`
   height: 1.5px;
   bottom: 4px;
 
-  background: ${p => p.theme.editorColours.text};
+  background: ${(p) => p.theme.editorColours.text};
 `
 
 const Duration = styled.span`
   font-size: 10px;
-  color: ${p => p.theme.editorColours.textInactive};
+  color: ${(p) => p.theme.editorColours.textInactive};
 `
 
 const NameWrapper = styled.span`

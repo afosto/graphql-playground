@@ -174,9 +174,7 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
     return (
       <Container ref={this.setContainerComponent}>
         <EditorWrapper>
-          <TopBar
-            shareEnabled={this.props.shareEnabled}
-          />
+          <TopBar shareEnabled={this.props.shareEnabled} />
           <EditorBar
             ref={this.setEditorBarComponent}
             onMouseDown={this.handleResizeStart}
@@ -242,8 +240,9 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
             <ResultWrap>
               <ResultDragBar ref={this.setResponseResizer} />
               <ExecuteButton />
-              {this.props.queryRunning &&
-                this.props.responses.size === 0 && <Spinner />}
+              {this.props.queryRunning && this.props.responses.size === 0 && (
+                <Spinner />
+              )}
               <Results setRef={this.setResultComponent} />
               {!this.props.queryRunning &&
                 (!this.props.responses || this.props.responses.size === 0) && (
@@ -295,64 +294,64 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
     )
   }
 
-  setQueryVariablesRef = ref => {
+  setQueryVariablesRef = (ref) => {
     this.queryVariablesRef = ref
   }
 
-  setHttpHeadersRef = ref => {
+  setHttpHeadersRef = (ref) => {
     this.httpHeadersRef = ref
   }
 
-  setQueryResizer = ref => {
+  setQueryResizer = (ref) => {
     this.queryResizer = ReactDOM.findDOMNode(ref)
   }
 
-  setResponseResizer = ref => {
+  setResponseResizer = (ref) => {
     this.responseResizer = ReactDOM.findDOMNode(ref)
   }
 
-  setEditorBarComponent = ref => {
+  setEditorBarComponent = (ref) => {
     this.editorBarComponent = ref
   }
 
-  setQueryEditorComponent = ref => {
+  setQueryEditorComponent = (ref) => {
     this.queryEditorComponent = ref
   }
 
-  setVariableEditorComponent = ref => {
+  setVariableEditorComponent = (ref) => {
     this.variableEditorComponent = ref
   }
 
-  setResultComponent = ref => {
+  setResultComponent = (ref) => {
     this.resultComponent = ref
   }
 
-  setDocExplorerRef = ref => {
+  setDocExplorerRef = (ref) => {
     if (ref) {
       this.docExplorerComponent = ref.getWrappedInstance()
     }
   }
-  setGraphExplorerRef = ref => {
+  setGraphExplorerRef = (ref) => {
     if (ref) {
       this.graphExplorerComponent = ref.getWrappedInstance()
     }
   }
-  setSchemaExplorerRef = ref => {
+  setSchemaExplorerRef = (ref) => {
     if (ref) {
       this.schemaExplorerComponent = ref
     }
   }
-  setContainerComponent = ref => {
+  setContainerComponent = (ref) => {
     this.containerComponent = ref
   }
 
-  handleClickReference = reference => {
+  handleClickReference = (reference) => {
     if (this.docExplorerComponent) {
       this.docExplorerComponent.showDocFromType(reference.field || reference)
     }
   }
 
-  setSideTabActiveContentRef = ref => {
+  setSideTabActiveContentRef = (ref) => {
     if (ref) {
       this.activeSideTabContent = ref
     }
@@ -392,7 +391,7 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
               },
             ),
           )
-          setTimeout(() => markers.forEach(marker => marker.clear()), 7000)
+          setTimeout(() => markers.forEach((marker) => marker.clear()), 7000)
         } catch (e) {
           //
         }
@@ -422,7 +421,7 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
     this.props.runQueryAtPosition(cursorIndex)
   }
 
-  private handleHintInformationRender = elem => {
+  private handleHintInformationRender = (elem) => {
     elem.addEventListener('click', this.onClickHintInformation)
 
     let onRemoveFn
@@ -435,7 +434,7 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
     )
   }
 
-  private handleResizeStart = downEvent => {
+  private handleResizeStart = (downEvent) => {
     if (!this.didClickDragBar(downEvent)) {
       return
     }
@@ -444,7 +443,7 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
 
     const offset = downEvent.clientX - getLeft(downEvent.target)
 
-    let onMouseMove: any = moveEvent => {
+    let onMouseMove: any = (moveEvent) => {
       if (moveEvent.buttons === 0) {
         return onMouseUp()
       }
@@ -474,14 +473,14 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
     )
   }
 
-  private handleTracingResizeStart = downEvent => {
+  private handleTracingResizeStart = (downEvent) => {
     downEvent.preventDefault()
 
     let didMove = false
     const hadHeight = this.props.responseTracingHeight
     const offset = downEvent.clientY - getTop(downEvent.target)
 
-    let onMouseMove: any = moveEvent => {
+    let onMouseMove: any = (moveEvent) => {
       if (moveEvent.buttons === 0) {
         return onMouseUp()
       }
@@ -513,7 +512,7 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
     document.addEventListener('mouseup', onMouseUp)
   }
 
-  private handleVariableResizeStart = downEvent => {
+  private handleVariableResizeStart = (downEvent) => {
     downEvent.preventDefault()
 
     let didMove = false
@@ -529,7 +528,7 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
       return
     }
 
-    let onMouseMove: any = moveEvent => {
+    let onMouseMove: any = (moveEvent) => {
       if (moveEvent.buttons === 0) {
         return onMouseUp()
       }
@@ -561,7 +560,7 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
     document.addEventListener('mouseup', onMouseUp)
   }
 
-  private onClickHintInformation = event => {
+  private onClickHintInformation = (event) => {
     if (event.target.className === 'typeName') {
       const typeName = event.target.innerHTML
       const schema = this.props.schema
@@ -655,7 +654,7 @@ const ResultWrap = styled.div`
   height: 100%;
   position: relative;
   border-left: none;
-  background: ${p => p.theme.editorColours.resultBackground};
+  background: ${(p) => p.theme.editorColours.resultBackground};
   overflow-anchor: auto;
 `
 
@@ -686,7 +685,7 @@ const BottomDrawer = styled<DrawerProps, 'div'>('div')`
   background: #0b1924;
   flex-direction: column;
   position: relative;
-  height: ${props => (props.isOpen ? `${props.height}px` : '43px')};
+  height: ${(props) => (props.isOpen ? `${props.height}px` : '43px')};
 `
 
 interface TitleProps {
@@ -711,27 +710,27 @@ const VariableEditor = styled(BottomDrawer)`
   .CodeMirror {
     padding-left: 4px;
     width: calc(100% - 4px);
-    background: ${p => p.theme.editorColours.leftDrawerBackground};
+    background: ${(p) => p.theme.editorColours.leftDrawerBackground};
   }
   .CodeMirror-lines {
     padding: 10px 0 20px 0;
   }
   .CodeMirror-linenumbers {
-    background: ${p => p.theme.editorColours.leftDrawerBackground};
+    background: ${(p) => p.theme.editorColours.leftDrawerBackground};
   }
 `
 
 const VariableEditorTitle = styled<TitleProps>(({ isOpen, ...rest }) => (
   <BottomDrawerTitle {...rest} />
 ))`
-  cursor: ${p => (p.isOpen ? 'row-resize' : 'n-resize')};
-  background: ${p => p.theme.editorColours.leftDrawerBackground};
+  cursor: ${(p) => (p.isOpen ? 'row-resize' : 'n-resize')};
+  background: ${(p) => p.theme.editorColours.leftDrawerBackground};
 `
 
 const VariableEditorSubtitle = styled<TitleProps, 'span'>('span')`
   margin-right: 10px;
   cursor: pointer;
-  color: ${p =>
+  color: ${(p) =>
     p.isOpen
       ? p.theme.editorColours.drawerText
       : p.theme.editorColours.drawerTextInactive};
@@ -741,16 +740,16 @@ const VariableEditorSubtitle = styled<TitleProps, 'span'>('span')`
 `
 
 const ResponseTracking = styled(BottomDrawer)`
-  background: ${p => p.theme.editorColours.rightDrawerBackground};
+  background: ${(p) => p.theme.editorColours.rightDrawerBackground};
 `
 
 const ResponseTrackingTitle = styled<TitleProps>(({ isOpen, ...rest }) => (
   <BottomDrawerTitle {...rest} />
 ))`
   text-align: right;
-  background: ${p => p.theme.editorColours.rightDrawerBackground};
-  cursor: ${props => (props.isOpen ? 's-resize' : 'n-resize')};
-  color: ${p => p.theme.editorColours.drawerTextInactive};
+  background: ${(p) => p.theme.editorColours.rightDrawerBackground};
+  cursor: ${(props) => (props.isOpen ? 's-resize' : 'n-resize')};
+  color: ${(p) => p.theme.editorColours.drawerTextInactive};
 `
 
 interface QueryProps {
@@ -761,8 +760,8 @@ const QueryWrap = styled<QueryProps, 'div'>('div')`
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: ${props => props.flex} 1 0%;
-  border-top: 8px solid ${props => props.theme.editorColours.resultBackground};
+  flex: ${(props) => props.flex} 1 0%;
+  border-top: 8px solid ${(props) => props.theme.editorColours.resultBackground};
 `
 
 const Intro = styled.div`
@@ -771,8 +770,8 @@ const Intro = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: ${p => p.theme.colours.textInactive};
-  font-size: ${p => p.theme.sizes.small16};
+  color: ${(p) => p.theme.colours.textInactive};
+  font-size: ${(p) => p.theme.sizes.small16};
   font-family: 'Source Code Pro', 'Consolas', 'Inconsolata', 'Droid Sans Mono',
     'Monaco', monospace;
   text-align: center;
@@ -782,10 +781,10 @@ const Intro = styled.div`
 const Listening = styled.div`
   position: absolute;
   bottom: 0;
-  color: ${p => p.theme.editorColours.text};
-  background: ${p => p.theme.editorColours.resultBackground};
-  font-size: ${p => p.theme.sizes.small16};
-  font-family: ${p => p.theme.settings['editor.fontFamily']};
+  color: ${(p) => p.theme.editorColours.text};
+  background: ${(p) => p.theme.editorColours.resultBackground};
+  font-size: ${(p) => p.theme.sizes.small16};
+  font-family: ${(p) => p.theme.settings['editor.fontFamily']};
   letter-spacing: 0.6px;
   padding-left: 24px;
   padding-bottom: 60px;

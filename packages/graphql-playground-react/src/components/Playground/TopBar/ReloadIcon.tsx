@@ -8,7 +8,7 @@ export interface Props {
   onClick?: () => void
 }
 
-const ReloadIcon: React.SFC<Props> = props => (
+const ReloadIcon: React.SFC<Props> = (props) => (
   <Positioner
     onClick={props.onClick}
     title="Reload Schema"
@@ -54,7 +54,7 @@ const refreshFrames = keyframes`
 // same result for these 2 keyframes, however when the props change
 // it makes the element animated with these keyframes to trigger
 // again the animation
-const reloadAction = props => keyframes`
+const reloadAction = (props) => keyframes`
 0% {
   transform: rotate(${props.animate ? 0 : 360}deg);
 }
@@ -64,14 +64,14 @@ const reloadAction = props => keyframes`
 }`
 
 const Svg = styled.svg`
-  fill: ${p => p.theme.editorColours.icon};
+  fill: ${(p) => p.theme.editorColours.icon};
   transition: 0.1s linear all;
-  ${p =>
+  ${(p) =>
     p.disabled
       ? undefined
       : css`
           &:hover {
-            fill: ${p => p.theme.editorColours.iconHover};
+            fill: ${(p) => p.theme.editorColours.iconHover};
           }
         `};
 `
@@ -81,17 +81,17 @@ const Positioner = styled(BasePositioner)`
 `
 const Circle = styled<Props, 'circle'>('circle')`
   fill: none;
-  stroke: ${p => p.theme.editorColours.icon};
+  stroke: ${(p) => p.theme.editorColours.icon};
   stroke-dasharray: 37.68;
   transition: opacity 0.3s ease-in-out;
-  opacity: ${p => (p.animate ? 1 : 0)};
+  opacity: ${(p) => (p.animate ? 1 : 0)};
   transform-origin: 9.5px 10px;
-  animation: ${refreshFrames} 2s linear ${p => (p.animate ? 'infinite' : '')};
+  animation: ${refreshFrames} 2s linear ${(p) => (p.animate ? 'infinite' : '')};
 `
 
 const Icon = styled<Props, 'path'>('path')`
   transition: opacity 0.3s ease-in-out;
-  opacity: ${p => (p.animate ? 0 : 1)};
+  opacity: ${(p) => (p.animate ? 0 : 1)};
   transform-origin: 9.5px 10px;
   animation: ${reloadAction} 0.5s linear;
 `

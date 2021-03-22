@@ -42,7 +42,7 @@ interface SidebarItemProps {
 }
 
 const ListItem = styled<SidebarItemProps, 'div'>('div')`
-  padding: 10px 10px 10px ${p => (p.deep ? '43px' : '38px')};
+  padding: 10px 10px 10px ${(p) => (p.deep ? '43px' : '38px')};
   word-break: break-word;
   font-weight: 600;
   cursor: pointer;
@@ -50,14 +50,14 @@ const ListItem = styled<SidebarItemProps, 'div'>('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: ${p =>
+  background: ${(p) =>
     p.active ? p.theme.editorColours.sidebarItemActive : 'transparent'};
   border-left: 4px solid
-    ${p => (p.active ? p.theme.editorColours.sidebarItemSide : 'transparent')};
+    ${(p) => (p.active ? p.theme.editorColours.sidebarItemSide : 'transparent')};
   border-radius: 2px;
 
   &:hover {
-    background: ${p => p.theme.editorColours.sidebarItemActive};
+    background: ${(p) => p.theme.editorColours.sidebarItemActive};
   }
 `
 
@@ -70,8 +70,8 @@ const Count = styled<SidebarItemProps, 'div'>('div')`
   justify-content: center;
   font-size: 11px;
   font-weight: bold;
-  background: ${p => p.theme.editorColours.sidebarItemSessions};
-  color: ${p => p.theme.editorColours.text};
-  opacity: ${p => (p.active ? 1 : 0.6)};
+  background: ${(p) => p.theme.editorColours.sidebarItemSessions};
+  color: ${(p) => p.theme.editorColours.text};
+  opacity: ${(p) => (p.active ? 1 : 0.6)};
   transition: 0.1s linear all;
 ` as any
