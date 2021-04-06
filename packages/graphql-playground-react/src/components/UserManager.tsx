@@ -15,6 +15,7 @@ export interface Props {
   authority: string
   clientId: string
   responseType?: string
+  responseMode?: string
   scope?: string
   redirectUri?: string
   silentRedirectUri?: string
@@ -31,9 +32,16 @@ class UserManager extends React.Component<Props, State> {
 
     const { authority, clientId } = this.props
 
-    let { responseType, scope, redirectUri, silentRedirectUri } = this.props
+    let {
+      responseType,
+      responseMode,
+      scope,
+      redirectUri,
+      silentRedirectUri,
+    } = this.props
 
     responseType = responseType || 'id_token token'
+    responseMode = responseMode || null
     scope = scope || 'openid'
     redirectUri = redirectUri || this.generateRedirectUri()
     silentRedirectUri =
@@ -44,9 +52,12 @@ class UserManager extends React.Component<Props, State> {
       authority,
       client_id: clientId,
       response_type: responseType,
+      response_mode: responseMode,
       scope,
       redirect_uri: redirectUri,
       silent_redirect_uri: silentRedirectUri,
+      filterProtocolClaims: true,
+      loadUserInfo: true,
     })
 
     this.state = { userManager }
